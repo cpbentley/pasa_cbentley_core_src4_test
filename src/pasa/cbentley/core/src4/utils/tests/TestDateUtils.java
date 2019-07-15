@@ -111,7 +111,7 @@ public class TestDateUtils extends BentleyTestCase {
 
    }
 
-   public void setUpMord() {
+   public void setupAbstract() {
 
    }
 

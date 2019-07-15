@@ -29,7 +29,7 @@ public class TestColorUtils extends BentleyTestCase {
       assertEquals(128, ColorUtils.getRed(ColorUtils.WEB_olive));
    }
 
-   public void setUpMord() {
+   public void setupAbstract() {
 
    }
 }

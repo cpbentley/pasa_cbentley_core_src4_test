@@ -14,7 +14,7 @@ public class TestIntUtils extends BentleyTestCase {
       super(true);
    }
 
-   public void setUpMord() {
+   public void setupAbstract() {
       iu = new IntUtils(uc);
    }
 

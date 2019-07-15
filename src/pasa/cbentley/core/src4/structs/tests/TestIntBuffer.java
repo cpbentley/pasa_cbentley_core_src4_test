@@ -10,7 +10,7 @@ public class TestIntBuffer extends BentleyTestCase {
       super(false);
    }
 
-   public void setUpMord() {
+   public void setupAbstract() {
 
    }
 

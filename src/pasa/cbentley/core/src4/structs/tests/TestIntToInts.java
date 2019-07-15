@@ -88,7 +88,7 @@ public class TestIntToInts extends BentleyTestCase {
 
    }
 
-   public void setUpMord() {
+   public void setupAbstract() {
 
    }
 }

@@ -11,7 +11,7 @@ public class TestShortUtils extends BentleyTestCase {
       super(true);
    }
 
-   public void setUpMord() {
+   public void setupAbstract() {
 
    }
 

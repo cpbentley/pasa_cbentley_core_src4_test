@@ -132,7 +132,7 @@ public class TestCharUtils extends BentleyTestCase {
    public void testCharFromLowByteInt() throws Exception {
    }
 
-   public void setUpMord() {
+   public void setupAbstract() {
       
    }
 

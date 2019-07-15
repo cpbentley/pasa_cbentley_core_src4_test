@@ -11,7 +11,7 @@ public class TestIOUtils extends BentleyTestCase {
       super(true);
    }
 
-   public void setUpMord() {
+   public void setupAbstract() {
       iu = new IOUtils(uc);
    }
 

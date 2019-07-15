@@ -9,7 +9,7 @@ public class TestIntToObjects extends BentleyTestCase {
       super(false);
    }
 
-   public void setUpMord() {
+   public void setupAbstract() {
 
    }
    public void testDelete() {

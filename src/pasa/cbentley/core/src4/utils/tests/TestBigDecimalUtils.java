@@ -45,6 +45,6 @@ public class TestBigDecimalUtils extends BentleyTestCase {
      
    }
 
-   public void setUpMord() {
+   public void setupAbstract() {
    }
 }

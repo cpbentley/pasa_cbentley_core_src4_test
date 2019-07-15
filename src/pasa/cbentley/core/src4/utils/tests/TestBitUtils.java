@@ -16,7 +16,7 @@ public class TestBitUtils extends BentleyTestCase {
       super(true);
    }
 
-   public void setUpMord() {
+   public void setupAbstract() {
       UCtx uc = new UCtx();
       bu = uc.getBU();
    }

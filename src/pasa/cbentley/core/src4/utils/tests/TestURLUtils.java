@@ -22,7 +22,7 @@ public class TestURLUtils extends BentleyTestCase {
 
    }
 
-   public void setUpMord() {
+   public void setupAbstract() {
 
    }
 

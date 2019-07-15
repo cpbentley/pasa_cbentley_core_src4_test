@@ -13,7 +13,7 @@ public class TestMathUtils extends BentleyTestCase {
       super(true);
    }
 
-   public void setUpMord() {
+   public void setupAbstract() {
       // TODO Auto-generated method stub
 
    }

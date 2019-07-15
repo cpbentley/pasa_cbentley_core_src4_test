@@ -4,7 +4,7 @@ import pasa.cbentley.testing.BentleyTestCase;
 
 public class TestDLogEntry extends BentleyTestCase {
 
-   public void setUpMord() {
+   public void setupAbstract() {
       
    }
 

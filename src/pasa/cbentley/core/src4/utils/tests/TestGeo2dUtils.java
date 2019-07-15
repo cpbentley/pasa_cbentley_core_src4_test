@@ -96,7 +96,7 @@ public class TestGeo2dUtils extends BentleyTestCase {
 
    }
 
-   public void setUpMord() {
+   public void setupAbstract() {
       // TODO Auto-generated method stub
 
    }

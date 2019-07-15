@@ -15,7 +15,7 @@ public class TestStringUtils extends BentleyTestCase {
       super(true);
    }
 
-   public void setUpMord() {
+   public void setupAbstract() {
 
    }
 

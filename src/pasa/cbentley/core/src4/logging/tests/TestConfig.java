@@ -9,7 +9,7 @@ import pasa.cbentley.testing.BentleyTestCase;
 
 public class TestConfig extends BentleyTestCase implements ITechTags, ITechConfig {
 
-   public void setUpMord() {
+   public void setupAbstract() {
 
    }
 

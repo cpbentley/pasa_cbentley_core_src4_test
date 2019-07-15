@@ -11,7 +11,7 @@ public class TestEventBusArray extends BentleyTestCase {
    int count = 0;
 
    int countUser = 0;
-   public void setUpMord() {
+   public void setupAbstract() {
       count = 0;
       countUser = 0;
    }

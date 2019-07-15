@@ -9,7 +9,7 @@ import pasa.cbentley.testing.BentleyTestCase;
 
 public class TestUCtx extends BentleyTestCase {
 
-   public void setUpMord() {
+   public void setupAbstract() {
 
    }
 
