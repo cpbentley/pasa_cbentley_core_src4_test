@@ -51,6 +51,33 @@ public class TestIntegerString extends BentleyTestCase {
       
    }
    
+   public void testPalindromes() {
+      IntegerString istr = new IntegerString(uc);
+
+      testPalindrome(istr, 599985, false);
+      testPalindrome(istr, 59985, false);
+      testPalindrome(istr, 5985, false);
+      testPalindrome(istr, 599995, true);
+   }
+   
+   private void testPalindrome(IntegerString istr, int value, boolean res) {
+      istr.setNumber(value);
+      assertEquals(res, istr.isPalindrome());
+   }
+   
+   public void test_599985() {
+
+      IntegerString istr = new IntegerString(uc);
+      istr.setNumber(599985);
+      assertEquals("599985", istr.getString());
+      assertEquals(6, istr.getSize());
+      assertEquals(3, istr.getNumDifferentDigits());
+      assertEquals(false, istr.isPalindrome());
+      assertEquals(1, istr.getNumIdenticalDigitsFromLeft());
+      assertEquals(1, istr.getNumIdenticalDigitsFromRight());
+      
+   }
+   
    public void test_666666_7500_47897191() {
 
       IntegerString istr = new IntegerString(uc);
