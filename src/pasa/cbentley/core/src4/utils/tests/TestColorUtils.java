@@ -32,6 +32,10 @@ public class TestColorUtils extends BentleyTestCase {
    public void testGetRed() throws Exception {
       assertEquals(128, ColorUtils.getRed(ColorUtils.WEB_olive));
    }
+   
+   public void testGetHSL() {
+        //TODO
+   }
 
    public void setupAbstract() {
 
