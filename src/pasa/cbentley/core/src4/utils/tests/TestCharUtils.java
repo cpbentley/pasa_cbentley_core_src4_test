@@ -44,6 +44,23 @@ public class TestCharUtils extends BentleyTestCase {
 
    }
    
+   public void testGetFirsIndex() {
+      char[] array = "456879".toCharArray();
+      assertEquals(-1, CharUtils.getFirstIndex('0',array));
+      assertEquals(0, CharUtils.getFirstIndex('4',array));
+      assertEquals(1, CharUtils.getFirstIndex('5',array));
+      assertEquals(2, CharUtils.getFirstIndex('6',array));
+      assertEquals(3, CharUtils.getFirstIndex('8',array));
+      assertEquals(4, CharUtils.getFirstIndex('7',array));
+      assertEquals(5, CharUtils.getFirstIndex('9',array));
+      
+      
+      assertEquals(5, CharUtils.getFirstIndex("9",array));
+      assertEquals(4, CharUtils.getFirstIndex("79",array));
+      assertEquals(0, CharUtils.getFirstIndex("45",array));
+      
+   }
+   
    public void testIsNumerical() {
       assertEquals(true, uu.isNumerical('0'));
       assertEquals(true, uu.isNumerical('1'));
