@@ -48,6 +48,34 @@ public class TestStringBBuilder extends BentleyTestCase {
       sb.replaceAll("%1", "");
       assertEquals("eat  this  now", sb.toString());
 
+      //border case
+      sb.reset();
+      sb.append("eat %1 this %1 now");
+      sb.replaceAll("%1", "%1");
+      assertEquals("eat %1 this %1 now", sb.toString());
+
+      sb.reset();
+      sb.append("eat %1 this %11 now");
+      sb.replaceAll("%1", "%");
+      assertEquals("eat % this %1 now", sb.toString());
+
+
+      sb.reset();
+      sb.append("eat this now");
+      sb.replaceAll("this", "");
+      assertEquals("eat  now", sb.toString());
+
+      
+      sb.reset();
+      sb.append("eat this now");
+      sb.replaceAll("", "now");
+      assertEquals("eat this now", sb.toString());
+
+      sb.reset();
+      sb.append("eat this now");
+      sb.replaceAll("", "");
+      assertEquals("eat this now", sb.toString());
+
    }
 
    public void testReplaceFirst() {
