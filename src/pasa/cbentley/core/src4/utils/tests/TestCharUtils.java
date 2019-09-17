@@ -19,7 +19,6 @@ public class TestCharUtils extends BentleyTestCase {
       super(true);
    }
 
-
    @Test
    public void testUnMapZero() throws Exception {
       assertEquals('a', uu.unMapZero(0, CharUtils.PLANE_0_EN));
@@ -39,28 +38,30 @@ public class TestCharUtils extends BentleyTestCase {
       assertEquals('б', uu.unMapZero(1, CharUtils.PLANE_4_RU));
       assertEquals('ч', uu.unMapZero(23, CharUtils.PLANE_4_RU));
       assertEquals('я', uu.unMapZero(31, CharUtils.PLANE_4_RU));
-      
+
       assertEquals('ё', uu.unMapZero(33, CharUtils.PLANE_4_RU));
 
    }
-   
-   public void testGetFirsIndex() {
+
+   public void testGetFirstIndex() {
       char[] array = "456879".toCharArray();
-      assertEquals(-1, CharUtils.getFirstIndex('0',array));
-      assertEquals(0, CharUtils.getFirstIndex('4',array));
-      assertEquals(1, CharUtils.getFirstIndex('5',array));
-      assertEquals(2, CharUtils.getFirstIndex('6',array));
-      assertEquals(3, CharUtils.getFirstIndex('8',array));
-      assertEquals(4, CharUtils.getFirstIndex('7',array));
-      assertEquals(5, CharUtils.getFirstIndex('9',array));
-      
-      
-      assertEquals(5, CharUtils.getFirstIndex("9",array));
-      assertEquals(4, CharUtils.getFirstIndex("79",array));
-      assertEquals(0, CharUtils.getFirstIndex("45",array));
-      
+      assertEquals(-1, CharUtils.getFirstIndex('0', array));
+      assertEquals(0, CharUtils.getFirstIndex('4', array));
+      assertEquals(1, CharUtils.getFirstIndex('5', array));
+      assertEquals(2, CharUtils.getFirstIndex('6', array));
+      assertEquals(3, CharUtils.getFirstIndex('8', array));
+      assertEquals(4, CharUtils.getFirstIndex('7', array));
+      assertEquals(5, CharUtils.getFirstIndex('9', array));
+
+      assertEquals(5, CharUtils.getFirstIndex("9", array));
+      assertEquals(4, CharUtils.getFirstIndex("79", array));
+      assertEquals(0, CharUtils.getFirstIndex("45", array));
+
+      assertEquals(1, CharUtils.getFirstIndex("45", "i45b45g".toCharArray()));
+      assertEquals(4, CharUtils.getFirstIndex("45", "i45b45g".toCharArray(), 3));
+
    }
-   
+
    public void testIsNumerical() {
       assertEquals(true, uu.isNumerical('0'));
       assertEquals(true, uu.isNumerical('1'));
@@ -73,7 +74,7 @@ public class TestCharUtils extends BentleyTestCase {
       assertEquals(true, uu.isNumerical('8'));
       assertEquals(true, uu.isNumerical('9'));
       assertEquals(false, uu.isNumerical('r'));
-      
+
    }
 
    public void testMapZero() throws Exception {
@@ -95,7 +96,7 @@ public class TestCharUtils extends BentleyTestCase {
       assertEquals(0, uu.mapZero('.'));
       assertEquals(0, uu.mapZero(' '));
       assertEquals(0, uu.mapZero('+'));
-      
+
       assertEquals(0, uu.mapZero('.'));
       assertEquals(31, uu.mapZero('я'));
       assertEquals(31, uu.mapZero('ё'));
@@ -104,12 +105,34 @@ public class TestCharUtils extends BentleyTestCase {
       assertEquals(2, uu.mapZero('в'));
       assertEquals(3, uu.mapZero('г'));
       assertEquals(4, uu.mapZero('д'));
-      
+
       assertEquals(23, uu.mapZero('ч'));
-      
-    
-      
+
    }
+
+   public void testShiftCharUp() {
+
+      char[] cs = new char[] { '1', '2', '3', '4', '5' };
+      CharUtils.shiftCharUp(cs, 1, 0, 1);
+      assertEquals("11245", new String(cs));
+
+      cs = new char[] { '1', '2', '3', '4', '5' };
+      CharUtils.shiftCharUp(cs, 2, 0, 1);
+      assertEquals("12125", new String(cs));
+
+      cs = new char[] { '1', '2', '3', '4', '5' };
+      CharUtils.shiftCharUp(cs, 3, 0, 1);
+      assertEquals("12312", new String(cs));
+
+      cs = new char[] { '1', '2', '3', '4', '5' };
+      CharUtils.shiftCharUp(cs, 4, 0, 1);
+      assertEquals("12341", new String(cs));
+
+      cs = new char[] { '1', '2', '3', '4', '5' };
+      CharUtils.shiftCharUp(cs, 5, 0, 1);
+      assertEquals("12345", new String(cs));
+   }
+
    @Test
    public void testGetCyrillicChar() throws Exception {
       char[] c = uu.getCyrillicChar();
@@ -154,7 +177,7 @@ public class TestCharUtils extends BentleyTestCase {
    }
 
    public void setupAbstract() {
-      
+
    }
 
 }
