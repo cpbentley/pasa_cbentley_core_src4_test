@@ -59,6 +59,15 @@ public class TestCharUtils extends BentleyTestCase {
 
       assertEquals(1, CharUtils.getFirstIndex("45", "i45b45g".toCharArray()));
       assertEquals(4, CharUtils.getFirstIndex("45", "i45b45g".toCharArray(), 3));
+      
+      //border cases
+      assertEquals(-1, CharUtils.getFirstIndex("", "i45b45g".toCharArray()));
+      assertEquals(-1, CharUtils.getFirstIndex("", "".toCharArray()));
+
+      
+      assertEquals(4, CharUtils.getFirstIndex("this", "eat this now".toCharArray()));
+      assertEquals(9, CharUtils.getFirstIndex("now", "eat this now".toCharArray()));
+      assertEquals(1, CharUtils.getFirstIndex("now", "enownow".toCharArray()));
 
    }
 
