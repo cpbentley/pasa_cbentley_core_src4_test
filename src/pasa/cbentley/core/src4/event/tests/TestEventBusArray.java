@@ -12,20 +12,22 @@ import pasa.cbentley.core.src4.event.IEventConsumer;
 import pasa.cbentley.testing.BentleyTestCase;
 
 public class TestEventBusArray extends BentleyTestCase {
-   int count = 0;
+   int   count        = 0;
 
-   int countUser = 0;
+   int   countUser    = 0;
+
+   int[] testTopology = new int[] { 3, 4, 5, 5 }; // 3 producers with num of events
+
    public void setupAbstract() {
       count = 0;
       countUser = 0;
    }
 
    public void testDynamicProducer() {
-      int[] testTopology = new int[] { 2, 3, 4 }; // 3 producers with num of events
       EventBusArray bus = new EventBusArray(uc, uc, testTopology);
 
       final int dynamicallyProducedPID = bus.getNextProducerID(5);
-      assertEquals(3, dynamicallyProducedPID);
+      assertEquals(testTopology.length, dynamicallyProducedPID);
 
       final int eventID = 4;
       bus.addConsumer(new EventConsumerAdapter(uc) {
@@ -49,7 +51,6 @@ public class TestEventBusArray extends BentleyTestCase {
    }
 
    public void testEventUser() {
-      int[] testTopology = new int[] { 2, 3, 4 }; // 3 producers with num of events
       EventBusArray bus = new EventBusArray(uc, uc, testTopology);
 
       BusEvent be = bus.createEvent(1, 0, this);
@@ -68,7 +69,6 @@ public class TestEventBusArray extends BentleyTestCase {
    public void testNew1() {
       int eventID = 1;
       int producerID = 2;
-      int[] testTopology = new int[] { 2, 3, 4 }; // 3 producers with num of events
       EventBusArray bus = new EventBusArray(uc, uc, testTopology);
       bus.addConsumer(new EventConsumerAdapter(uc) {
          public void consumeEvent(BusEvent e) {
@@ -87,9 +87,9 @@ public class TestEventBusArray extends BentleyTestCase {
    public void testNew2() {
       int eventID = 1;
       int producerID = 2;
-      int[] testTopology = new int[] { 2, 3, 4 }; // 3 producers with num of events
+
       EventBusArray bus = new EventBusArray(uc, uc, testTopology);
-      bus.addConsumer(new EventConsumerAdapter(uc){
+      bus.addConsumer(new EventConsumerAdapter(uc) {
          public void consumeEvent(BusEvent e) {
             count++;
             assertEquals(1, e.getEventID());
@@ -116,7 +116,6 @@ public class TestEventBusArray extends BentleyTestCase {
    }
 
    public void testAnyEventID0() {
-      int[] testTopology = new int[] { 2, 3, 4 }; // 3 producers with num of events
       EventBusArray bus = new EventBusArray(uc, uc, testTopology);
       IEventConsumer allMemoryEventConsumer = new EventConsumerAdapter(uc) {
          public void consumeEvent(BusEvent e) {
@@ -143,31 +142,34 @@ public class TestEventBusArray extends BentleyTestCase {
             assertEquals(TestEventBusArray.this, e.getProducer());
          }
       }, IEventsCore.PID_3_MEMORY, IEventsCore.EID_MEMORY_2_USER_REQUESTED_GC);
-      
+
       BusEvent be = bus.createEvent(IEventsCore.PID_3_MEMORY, IEventsCore.EID_MEMORY_2_USER_REQUESTED_GC, this);
       bus.putOnBus(be);
-      
+
       assertEquals(1, count);
       assertEquals(1, countUser);
-      
+
       BusEvent be2 = bus.createEvent(IEventsCore.PID_3_MEMORY, IEventsCore.EID_MEMORY_1_OUT_OF_MEMORY_GC, this);
       bus.putOnBus(be2);
       assertEquals(2, count);
       assertEquals(1, countUser);
-      
-      BusEvent be3 = bus.createEvent(IEventsCore.PID_3_MEMORY, IEventsCore.EID_MEMORY_0_ANY, this);
-      bus.putOnBus(be3);
-      assertEquals(3, count);
-      assertEquals(1, countUser);
-      
-      
-      
+
+      //you cannot create an event with id 0
+      try {
+         BusEvent be3 = bus.createEvent(IEventsCore.PID_3_MEMORY, IEventsCore.EID_MEMORY_0_ANY, this);
+         bus.putOnBus(be3);
+         assertNotReachable("eid 0");
+         assertEquals(3, count);
+         assertEquals(1, countUser);
+      } catch (IllegalArgumentException e) {
+         assertReachable();
+      }
+
    }
 
    public void testPIDAny() {
       int eventID = 1;
       int producerID = 2;
-      int[] testTopology = new int[] { 2, 3, 4 }; // 3 producers with num of events
       EventBusArray bus = new EventBusArray(uc, uc, testTopology);
       bus.addConsumer(new EventConsumerAdapter(uc) {
          public void consumeEvent(BusEvent e) {
