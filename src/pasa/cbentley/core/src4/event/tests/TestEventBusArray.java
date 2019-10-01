@@ -9,9 +9,11 @@ import pasa.cbentley.core.src4.event.BusEvent;
 import pasa.cbentley.core.src4.event.EventBusArray;
 import pasa.cbentley.core.src4.event.EventConsumerAdapter;
 import pasa.cbentley.core.src4.event.IEventConsumer;
+import pasa.cbentley.core.src4.helpers.CounterInt;
+import pasa.cbentley.core.src4.interfaces.ITechThread;
 import pasa.cbentley.testing.BentleyTestCase;
 
-public class TestEventBusArray extends BentleyTestCase {
+public class TestEventBusArray extends BentleyTestCase implements ITechThread {
    int   count        = 0;
 
    int   countUser    = 0;
@@ -195,5 +197,66 @@ public class TestEventBusArray extends BentleyTestCase {
       BusEvent be2 = bus.createEvent(otherPID, eventID, this);
       bus.putOnBus(be2);
       assertEquals(count, 3);
+   }
+   
+   
+   public void testThreadModes() {
+      EventBusArray bus = new EventBusArray(uc, uc, testTopology);
+      
+      CounterInt counter = new CounterInt(uc, 0);
+      
+      TestExecutor test = new TestExecutor(uc);
+      
+      bus.setExecutor(test);
+      
+      assertEquals(-1, test.getLastMode());
+      
+      final int eventID = 1;
+      final int producerID = 2;
+      
+      EventConsumerAdapterTest consumer1 = new EventConsumerAdapterTest(uc, this, producerID, eventID, counter);
+      bus.addConsumer(consumer1, producerID, eventID, THREAD_MODE_3_WORKER);
+      
+      assertEquals(counter.getCount(), 0);
+      
+      bus.sendNewEvent(producerID, eventID, this);
+      
+      assertEquals(counter.getCount(), 1);
+      assertEquals(THREAD_MODE_3_WORKER, test.getLastMode());
+
+      EventConsumerAdapterTest consumer2 = new EventConsumerAdapterTest(uc, this, producerID, eventID, counter);
+      bus.addConsumer(consumer2, producerID, eventID, THREAD_MODE_1_MAIN_NOW);
+      
+      bus.sendNewEvent(producerID, eventID, this);
+      assertEquals(counter.getCount(), 3);
+      
+      //consumers are called in the order they were added so the last mode on top of stack is the last one
+      assertEquals(THREAD_MODE_1_MAIN_NOW, test.getLastMode());
+      assertEquals(THREAD_MODE_3_WORKER, test.getLastMode());
+      
+      EventConsumerAdapterTest consumer3 = new EventConsumerAdapterTest(uc, this, producerID, eventID, counter);
+      bus.addConsumer(consumer3, producerID, eventID, THREAD_MODE_2_MAIN_LATER);
+      
+      bus.sendNewEvent(producerID, eventID, this);
+      assertEquals(counter.getCount(), 6);
+      
+      assertEquals(THREAD_MODE_2_MAIN_LATER, test.getLastMode());
+      assertEquals(THREAD_MODE_1_MAIN_NOW, test.getLastMode());
+      assertEquals(THREAD_MODE_3_WORKER, test.getLastMode());
+     
+      EventConsumerAdapterTest consumer4 = new EventConsumerAdapterTest(uc, this, producerID, eventID, counter);
+      bus.addConsumer(consumer4, producerID, eventID, THREAD_MODE_0_POST_NOW);
+      
+      bus.sendNewEvent(producerID, eventID, this);
+      assertEquals(counter.getCount(), 10);
+      
+      assertEquals(THREAD_MODE_2_MAIN_LATER, test.getLastMode());
+      assertEquals(THREAD_MODE_1_MAIN_NOW, test.getLastMode());
+      assertEquals(THREAD_MODE_3_WORKER, test.getLastMode());
+      assertEquals(-1, test.getLastMode()); //post now is not executed by executor
+     
+      
+      
+     
    }
 }
