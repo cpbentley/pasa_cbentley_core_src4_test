@@ -4,14 +4,14 @@
  */
 package pasa.cbentley.core.src4.logging.tests;
 
-import pasa.cbentley.core.src4.logging.Config;
+import pasa.cbentley.core.src4.logging.DLogConfig;
 import pasa.cbentley.core.src4.logging.DLogEntry;
 import pasa.cbentley.core.src4.logging.DLogEntryOfConfig;
 import pasa.cbentley.core.src4.logging.ITechConfig;
 import pasa.cbentley.core.src4.logging.ITechTags;
 import pasa.cbentley.testing.BentleyTestCase;
 
-public class TestConfig extends BentleyTestCase implements ITechTags, ITechConfig {
+public class TestDLogConfig extends BentleyTestCase implements ITechTags, ITechConfig {
 
    public void setupAbstract() {
 
@@ -19,7 +19,7 @@ public class TestConfig extends BentleyTestCase implements ITechTags, ITechConfi
 
    public void testConfigDefault() {
 
-      Config c = new Config(uc);
+      DLogConfig c = new DLogConfig(uc);
 
       assertEquals(c.getLogLevel(), LVL_05_FINE);
       c.setLevelGlobal(LVL_03_FINEST);
@@ -37,7 +37,7 @@ public class TestConfig extends BentleyTestCase implements ITechTags, ITechConfi
 
    public void testConfigClassNegative() {
 
-      Config c = new Config(uc);
+      DLogConfig c = new DLogConfig(uc);
       c.setClassNegative(Integer.class, true);
 
       DLogEntry entry = new DLogEntry();
@@ -56,7 +56,7 @@ public class TestConfig extends BentleyTestCase implements ITechTags, ITechConfi
 
    public void testConfigFlagTag() {
 
-      Config c = new Config(uc);
+      DLogConfig c = new DLogConfig(uc);
       //by default all flags not explicitely set are refused
       c.setFlagTag(FLAG_05_PRINT_UI, false); //do not print UI
 
@@ -81,7 +81,7 @@ public class TestConfig extends BentleyTestCase implements ITechTags, ITechConfi
 
    public void testConfigFlagTagAllPositives() {
 
-      Config c = new Config(uc);
+      DLogConfig c = new DLogConfig(uc);
       c.setFlagPrint(MASTER_FLAG_02_OPEN_ALL_PRINT, true);
 
       c.setFlagTag(FLAG_05_PRINT_UI, false);
@@ -106,7 +106,7 @@ public class TestConfig extends BentleyTestCase implements ITechTags, ITechConfi
    }
 
    public void testThreadName() {
-      Config c = new Config(uc);
+      DLogConfig c = new DLogConfig(uc);
       c.setFlagPrint(MASTER_FLAG_02_OPEN_ALL_PRINT, true);
       DLogEntry entry = new DLogEntry();
       entry.setDevFlags(DEV_4_THREAD);
