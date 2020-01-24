@@ -7,6 +7,7 @@ package pasa.cbentley.core.src4.utils.tests;
 import org.junit.Test;
 
 import pasa.cbentley.core.src4.ctx.UCtx;
+import pasa.cbentley.core.src4.io.BADataOS;
 import pasa.cbentley.core.src4.structs.IntBuffer;
 import pasa.cbentley.core.src4.utils.StringUtils;
 import pasa.cbentley.testing.BentleyTestCase;
@@ -94,6 +95,22 @@ public class TestStringUtils extends BentleyTestCase {
       assertEquals(true, su.isLastLetter('Я'));
       assertEquals(true, su.isLastLetter('я'));
 
+   }
+
+   public void testStringIntLong() throws Exception {
+
+      BADataOS ba = uc.createNewBADataOS();
+      ba.writeByte(4);
+      ba.writeChars("eat");
+
+      byte[] data = ba.getByteCopy();
+
+      assertEquals("eat", su.getStringIntLong(data, 1));
+
+      su.writeStringIntLong("grt", data, 0);
+      assertEquals("grt", su.getStringIntLong(data, 0));
+
+      
    }
 
    @Test
