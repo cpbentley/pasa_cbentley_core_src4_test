@@ -1,5 +1,5 @@
 /*
- * (c) 2018-2019 Charles-Philip Bentley
+ * (c) 2018-2020 Charles-Philip Bentley
  * This code is licensed under MIT license (see LICENSE.txt for details)
  */
 package pasa.cbentley.core.src4.event.tests;
@@ -11,9 +11,9 @@ import pasa.cbentley.core.src4.event.EventConsumerAdapter;
 import pasa.cbentley.core.src4.event.IEventConsumer;
 import pasa.cbentley.core.src4.helpers.CounterInt;
 import pasa.cbentley.core.src4.interfaces.ITechThread;
-import pasa.cbentley.testing.BentleyTestCase;
+import pasa.cbentley.testing.engine.TestCaseBentley;
 
-public class TestEventBusArray extends BentleyTestCase implements ITechThread {
+public class TestEventBusArray extends TestCaseBentley implements ITechThread {
    int   count        = 0;
 
    int   countUser    = 0;
@@ -123,42 +123,42 @@ public class TestEventBusArray extends BentleyTestCase implements ITechThread {
          public void consumeEvent(BusEvent e) {
             count++;
             if (count == 1) {
-               assertEquals(IEventsCore.EID_MEMORY_2_USER_REQUESTED_GC, e.getEventID());
+               assertEquals(IEventsCore.PID_3_MEMORY_2_USER_REQUESTED_GC, e.getEventID());
             } else if (count == 2) {
-               assertEquals(IEventsCore.EID_MEMORY_1_OUT_OF_MEMORY_GC, e.getEventID());
+               assertEquals(IEventsCore.PID_3_MEMORY_1_OUT_OF_MEMORY_GC, e.getEventID());
             } else {
-               assertEquals(IEventsCore.EID_MEMORY_0_ANY, e.getEventID());
+               assertEquals(IEventsCore.PID_3_MEMORY_0_ANY, e.getEventID());
             }
             assertEquals(IEventsCore.PID_3_MEMORY, e.getProducerID());
             assertEquals(TestEventBusArray.this, e.getProducer());
          }
       };
 
-      bus.addConsumer(allMemoryEventConsumer, IEventsCore.PID_3_MEMORY, IEventsCore.EID_MEMORY_0_ANY);
+      bus.addConsumer(allMemoryEventConsumer, IEventsCore.PID_3_MEMORY, IEventsCore.PID_3_MEMORY_0_ANY);
 
       bus.addConsumer(new EventConsumerAdapter(uc) {
          public void consumeEvent(BusEvent e) {
             countUser++;
-            assertEquals(IEventsCore.EID_MEMORY_2_USER_REQUESTED_GC, e.getEventID());
+            assertEquals(IEventsCore.PID_3_MEMORY_2_USER_REQUESTED_GC, e.getEventID());
             assertEquals(IEventsCore.PID_3_MEMORY, e.getProducerID());
             assertEquals(TestEventBusArray.this, e.getProducer());
          }
-      }, IEventsCore.PID_3_MEMORY, IEventsCore.EID_MEMORY_2_USER_REQUESTED_GC);
+      }, IEventsCore.PID_3_MEMORY, IEventsCore.PID_3_MEMORY_2_USER_REQUESTED_GC);
 
-      BusEvent be = bus.createEvent(IEventsCore.PID_3_MEMORY, IEventsCore.EID_MEMORY_2_USER_REQUESTED_GC, this);
+      BusEvent be = bus.createEvent(IEventsCore.PID_3_MEMORY, IEventsCore.PID_3_MEMORY_2_USER_REQUESTED_GC, this);
       bus.putOnBus(be);
 
       assertEquals(1, count);
       assertEquals(1, countUser);
 
-      BusEvent be2 = bus.createEvent(IEventsCore.PID_3_MEMORY, IEventsCore.EID_MEMORY_1_OUT_OF_MEMORY_GC, this);
+      BusEvent be2 = bus.createEvent(IEventsCore.PID_3_MEMORY, IEventsCore.PID_3_MEMORY_1_OUT_OF_MEMORY_GC, this);
       bus.putOnBus(be2);
       assertEquals(2, count);
       assertEquals(1, countUser);
 
       //you cannot create an event with id 0
       try {
-         BusEvent be3 = bus.createEvent(IEventsCore.PID_3_MEMORY, IEventsCore.EID_MEMORY_0_ANY, this);
+         BusEvent be3 = bus.createEvent(IEventsCore.PID_3_MEMORY, IEventsCore.PID_3_MEMORY_0_ANY, this);
          bus.putOnBus(be3);
          assertNotReachable("eid 0");
          assertEquals(3, count);

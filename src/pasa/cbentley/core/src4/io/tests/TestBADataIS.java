@@ -1,14 +1,14 @@
 /*
- * (c) 2018-2019 Charles-Philip Bentley
+ * (c) 2018-2020 Charles-Philip Bentley
  * This code is licensed under MIT license (see LICENSE.txt for details)
  */
 package pasa.cbentley.core.src4.io.tests;
 
 import pasa.cbentley.core.src4.io.BADataIS;
 import pasa.cbentley.core.src4.io.BADataOS;
-import pasa.cbentley.testing.BentleyTestCase;
+import pasa.cbentley.testing.engine.TestCaseBentley;
 
-public class TestBADataIS extends BentleyTestCase {
+public class TestBADataIS extends TestCaseBentley {
 
    public TestBADataIS() {
       super(false);
@@ -48,7 +48,21 @@ public class TestBADataIS extends BentleyTestCase {
 
       testEndOfFile(bais);
    }
+   public void testWriteString() {
+      BADataOS daos = new BADataOS(uc);
+      daos.writeString("");
+      daos.writeString("Hello");
+      daos.writeString(null);
+      daos.writeString("Frank");
+      
+      BADataIS bais = new BADataIS(uc, daos);
+      assertEquals("", bais.readString());
+      assertEquals("Hello", bais.readString());
+      assertEquals(null, bais.readString());
+      assertEquals("Frank", bais.readString());
+      
 
+   }
    public void testWriteShort() {
       BADataOS daos = new BADataOS(uc);
       daos.writeShort(5);

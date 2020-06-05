@@ -1,5 +1,5 @@
 /*
- * (c) 2018-2019 Charles-Philip Bentley
+ * (c) 2018-2020 Charles-Philip Bentley
  * This code is licensed under MIT license (see LICENSE.txt for details)
  */
 package pasa.cbentley.core.src4.utils.tests;
@@ -8,9 +8,9 @@ import pasa.cbentley.core.src4.ctx.UCtx;
 import pasa.cbentley.core.src4.utils.ColorUtils;
 import pasa.cbentley.core.src4.utils.MathUtils;
 import pasa.cbentley.core.src4.utils.StringUtils;
-import pasa.cbentley.testing.BentleyTestCase;
+import pasa.cbentley.testing.engine.TestCaseBentley;
 
-public class TestMathUtils extends BentleyTestCase {
+public class TestMathUtils extends TestCaseBentley {
    MathUtils mu = new MathUtils(new UCtx());
 
    public TestMathUtils() {
@@ -21,10 +21,85 @@ public class TestMathUtils extends BentleyTestCase {
       // TODO Auto-generated method stub
 
    }
+   public void testACOS() {
+      StringUtils su = uc.getStrU();
+      
+      assertEquals("1.159", su.prettyDouble(Math.acos(0.4), 3));
+      assertEquals("1.159", su.prettyDouble(MathUtils.acos(0.4), 3));
+      
+      assertEquals("1.104", su.prettyDouble(Math.acos(0.45), 3));
+      assertEquals("1.104", su.prettyDouble(MathUtils.acos(0.45), 3));
+      
+    
+      assertEquals("0.0", su.prettyDouble(Math.acos(1), 3));
+      assertEquals("3.141", su.prettyDouble(Math.acos(-1), 3));
+      assertEquals(Double.NaN, Math.acos(2)); 
+      assertEquals("NaN", su.prettyDouble(Math.acos(2), 3));
+     
+   }
+   public void testacosDemo() {
+      StringUtils su = uc.getStrU();
+      
+      assertEquals("1.159", su.prettyDouble(Math.acos(0.4), 3));
+      assertEquals("1.158", su.prettyDouble(MathUtils.acosApproxDesmos(0.4f), 3));
+      
+      assertEquals("1.047", su.prettyDouble(Math.acos(0.5), 3));
+      assertEquals("1.046", su.prettyDouble(MathUtils.acosApproxDesmos(0.5f), 3));
+    
+   }
+   
+   public void testacosNVidia() {
+      StringUtils su = uc.getStrU();
+      
+      assertEquals("1.159", su.prettyDouble(Math.acos(0.4), 3));
+      assertEquals("1.159", su.prettyDouble(MathUtils.acosNVidia(0.4f), 3));
+      
+      assertEquals("1.047", su.prettyDouble(Math.acos(0.5), 3));
+      assertEquals("1.047", su.prettyDouble(MathUtils.acosNVidia(0.5f), 3));
+    
+   }
+   public void testASIN() {
+      StringUtils su = uc.getStrU();
+      
+      assertEquals("0.411", su.prettyDouble(Math.asin(0.4), 3));
+      assertEquals("0.411", su.prettyDouble(MathUtils.asin3(0.4), 3));
+      
+      assertEquals("23.548", su.prettyDouble(Math.toDegrees(0.411d), 3));
+      
+      
+      assertEquals("0.466", su.prettyDouble(Math.asin(0.45), 3));
+      assertEquals("0.466", su.prettyDouble(MathUtils.asin3(0.45), 3));
+      
+      assertEquals("26.699", su.prettyDouble(Math.toDegrees(0.466d), 3));
+    
+      
+      assertEquals("1.570", su.prettyDouble(Math.asin(1), 3));
+      assertEquals("-1.570", su.prettyDouble(Math.asin(-1), 3));
+      assertEquals(Double.NaN, Math.asin(2)); 
+      assertEquals("NaN", su.prettyDouble(Math.asin(2), 3));
+     
+      assertEquals("-1.570", su.prettyDouble(MathUtils.asin(-1), 3));
+      assertEquals(Double.NaN, MathUtils.asin(2)); 
+      assertEquals("NaN", su.prettyDouble(MathUtils.asin(2), 3));
+    
+      
+      assertEquals("1.536", su.prettyDouble(MathUtils.asin3(1), 3));
+      assertEquals("1.566", su.prettyDouble(MathUtils.asin5(1), 3));
+      assertEquals("1.569", su.prettyDouble(MathUtils.asin6(1), 3));
+      assertEquals("1.570", su.prettyDouble(MathUtils.asin7(1), 3));
+      
+     
+       
+      
+   }
    
    public void testAtan() {
       StringUtils su = uc.getStrU();
+      
       assertEquals("0.785", su.prettyDouble(MathUtils.aTan(1, 1), 3));
+      
+      assertEquals("0.785", su.prettyDouble(Math.atan2(1, 1), 3));
+
       assertEquals("1.047", su.prettyDouble(MathUtils.aTan(2, 1), 3));
 
       System.out.println(Math.toDegrees(MathUtils.aTan(2, 1)));

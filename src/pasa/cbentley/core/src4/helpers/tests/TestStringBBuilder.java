@@ -1,9 +1,13 @@
+/*
+ * (c) 2018-2020 Charles-Philip Bentley
+ * This code is licensed under MIT license (see LICENSE.txt for details)
+ */
 package pasa.cbentley.core.src4.helpers.tests;
 
 import pasa.cbentley.core.src4.helpers.StringBBuilder;
-import pasa.cbentley.testing.BentleyTestCase;
+import pasa.cbentley.testing.engine.TestCaseBentley;
 
-public class TestStringBBuilder extends BentleyTestCase {
+public class TestStringBBuilder extends TestCaseBentley {
 
    public TestStringBBuilder() {
       super(true);

@@ -1,5 +1,5 @@
 /*
- * (c) 2018-2019 Charles-Philip Bentley
+ * (c) 2018-2020 Charles-Philip Bentley
  * This code is licensed under MIT license (see LICENSE.txt for details)
  */
 package pasa.cbentley.core.src4.utils.tests;
@@ -7,9 +7,9 @@ package pasa.cbentley.core.src4.utils.tests;
 import java.util.Calendar;
 
 import pasa.cbentley.core.src4.utils.DateUtils;
-import pasa.cbentley.testing.BentleyTestCase;
+import pasa.cbentley.testing.engine.TestCaseBentley;
 
-public class TestDateUtils extends BentleyTestCase {
+public class TestDateUtils extends TestCaseBentley {
 
    private DateUtils du = new DateUtils(uc);
 

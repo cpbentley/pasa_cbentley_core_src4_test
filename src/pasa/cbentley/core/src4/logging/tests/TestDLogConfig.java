@@ -1,5 +1,5 @@
 /*
- * (c) 2018-2019 Charles-Philip Bentley
+ * (c) 2018-2020 Charles-Philip Bentley
  * This code is licensed under MIT license (see LICENSE.txt for details)
  */
 package pasa.cbentley.core.src4.logging.tests;
@@ -9,9 +9,9 @@ import pasa.cbentley.core.src4.logging.DLogEntry;
 import pasa.cbentley.core.src4.logging.DLogEntryOfConfig;
 import pasa.cbentley.core.src4.logging.ITechConfig;
 import pasa.cbentley.core.src4.logging.ITechTags;
-import pasa.cbentley.testing.BentleyTestCase;
+import pasa.cbentley.testing.engine.TestCaseBentley;
 
-public class TestDLogConfig extends BentleyTestCase implements ITechTags, ITechConfig {
+public class TestDLogConfig extends TestCaseBentley implements ITechTags, ITechConfig {
 
    public void setupAbstract() {
 

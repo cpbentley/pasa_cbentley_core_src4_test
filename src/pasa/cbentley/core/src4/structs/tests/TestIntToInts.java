@@ -1,13 +1,13 @@
 /*
- * (c) 2018-2019 Charles-Philip Bentley
+ * (c) 2018-2020 Charles-Philip Bentley
  * This code is licensed under MIT license (see LICENSE.txt for details)
  */
 package pasa.cbentley.core.src4.structs.tests;
 
 import pasa.cbentley.core.src4.structs.IntToInts;
-import pasa.cbentley.testing.BentleyTestCase;
+import pasa.cbentley.testing.engine.TestCaseBentley;
 
-public class TestIntToInts extends BentleyTestCase {
+public class TestIntToInts extends TestCaseBentley {
 
    public TestIntToInts() {
       super(false);

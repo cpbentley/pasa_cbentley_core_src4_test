@@ -1,5 +1,5 @@
 /*
- * (c) 2018-2019 Charles-Philip Bentley
+ * (c) 2018-2020 Charles-Philip Bentley
  * This code is licensed under MIT license (see LICENSE.txt for details)
  */
 package pasa.cbentley.core.src4.utils.tests;
@@ -10,9 +10,9 @@ import pasa.cbentley.core.src4.utils.BitUtils;
 import pasa.cbentley.core.src4.utils.BitCoordinate;
 import pasa.cbentley.core.src4.utils.IntUtils;
 import pasa.cbentley.core.src4.utils.ShortUtils;
-import pasa.cbentley.testing.BentleyTestCase;
+import pasa.cbentley.testing.engine.TestCaseBentley;
 
-public class TestBitUtils extends BentleyTestCase {
+public class TestBitUtils extends TestCaseBentley {
 
    private BitUtils bu;
 
@@ -69,6 +69,38 @@ public class TestBitUtils extends BentleyTestCase {
       assertEquals(4, BitUtils.getDataOutOfBitMask(val, BitUtils.BIT_MASK_32));
 
       assertEquals(true, BitUtils.isBitMaskSet(val, BitUtils.BIT_MASK_32));
+   }
+
+   public void testSetByte1() {
+
+      int data = 2;
+
+      int d = BitUtils.setByte1(data, 6);
+      assertEquals(d, (6 << 24) + 2);
+   }
+
+   public void testSetByte2() {
+
+      int data = 2;
+
+      int d = BitUtils.setByte2(data, 6);
+      assertEquals(d, (6 << 16) + 2);
+   }
+
+   public void testSetByte3() {
+
+      int data = 2;
+
+      int d = BitUtils.setByte3(data, 6);
+      assertEquals(d, (6 << 8) + 2);
+   }
+
+   public void testSetByte4() {
+
+      int data = 2;
+
+      int d = BitUtils.setByte4(data, 6);
+      assertEquals(d, 6);
    }
 
    public void testHexadecimal() {
@@ -373,7 +405,7 @@ public class TestBitUtils extends BentleyTestCase {
 
    public void testCopyRead() {
       byte[] pointers = new byte[300];
-      BitCoordinate c = new BitCoordinate(uc,0, 0);
+      BitCoordinate c = new BitCoordinate(uc, 0, 0);
       // copy 1-3 2-3 3-3 ... 49-3
       for (int i = 1; i < 50; i++) {
          BitUtils.copyBits(pointers, c, i, 10);
@@ -416,7 +448,6 @@ public class TestBitUtils extends BentleyTestCase {
    }
 
    public void testFirstBitRight() {
-
 
       assertEquals(true, BitUtils.isFirstRight(0, 2));
       assertEquals(true, BitUtils.isFirstRight(4, 8));
@@ -478,7 +509,7 @@ public class TestBitUtils extends BentleyTestCase {
 
       //shift for one bit from bit 1 to bit 5
       bu.shiftBitsUp(data, 1, 1, 8, true);
-      c.setByteAndBit(0,1);
+      c.setByteAndBit(0, 1);
       assertEquals(value, BitUtils.readBits(data, c, numbits));
       if (debug)
          System.out.println("After Shift of 1 bit 1-8");
@@ -759,7 +790,7 @@ public class TestBitUtils extends BentleyTestCase {
       BitUtils.copyBits(array, c, BitUtils.toInteger(val), n);
       BitUtils.copyBits(array, c, BitUtils.toInteger("1111"), 4);
       int lastusedbit = c.unmap();
-      c.setByteAndBit(0,4);
+      c.setByteAndBit(0, 4);
       //1101 becomes 11001 
       bu.expandBitSize(array, c, 3, a, x, b, y, lastusedbit);
       assertEquals(result, bu.toBinString(array));

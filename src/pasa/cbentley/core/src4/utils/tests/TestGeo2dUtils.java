@@ -1,13 +1,13 @@
 /*
- * (c) 2018-2019 Charles-Philip Bentley
+ * (c) 2018-2020 Charles-Philip Bentley
  * This code is licensed under MIT license (see LICENSE.txt for details)
  */
 package pasa.cbentley.core.src4.utils.tests;
 
 import pasa.cbentley.core.src4.utils.Geo2dUtils;
-import pasa.cbentley.testing.BentleyTestCase;
+import pasa.cbentley.testing.engine.TestCaseBentley;
 
-public class TestGeo2dUtils extends BentleyTestCase {
+public class TestGeo2dUtils extends TestCaseBentley {
    
    
    Geo2dUtils gu = new Geo2dUtils(uc);
@@ -77,7 +77,102 @@ public class TestGeo2dUtils extends BentleyTestCase {
       assertEquals(ag[k++], 5);
 
    }
+   public void testInterSection() {
+      int[] t = new int[4];
+      int[] v = gu.getIntersection(10, 10, 40, 40, 0, 0, 200, 140, t);
+      assertNotNull(v);
+      assertEquals(v[0], 10);
+      assertEquals(v[1], 10);
+      assertEquals(v[2], 40);
+      assertEquals(v[3], 40);
 
+      v = gu.getIntersection(-10, -10, 40, 40, 0, 0, 200, 140, t);
+      assertNotNull(v);
+      assertEquals(v[0], 0);
+      assertEquals(v[1], 0);
+      assertEquals(v[2], 30);
+      assertEquals(v[3], 30);
+
+      v = gu.getIntersection(-10, -10, 5, 40, 0, 0, 200, 140, t);
+      assertNull(v);
+
+      v = gu.getIntersection(0, -50, 5, 40, 0, 0, 200, 140, t);
+      assertNull(v);
+
+      v = gu.getIntersection(100, 50, 400, 400, 0, 0, 200, 140, t);
+      assertNotNull(v);
+      assertEquals(v[0], 100);
+      assertEquals(v[1], 50);
+      assertEquals(v[2], 100);
+      assertEquals(v[3], 90);
+
+      v = gu.getIntersection(156, 73, 38, 36, 0, 0, 176, 176, t);
+      assertNotNull(v);
+      assertEquals(v[0], 156);
+      assertEquals(v[1], 73);
+      assertEquals(v[2], 20);
+      assertEquals(v[3], 36);
+
+      v = gu.getIntersection(156, 156, 38, 36, 0, 0, 176, 176, t);
+      assertNotNull(v);
+      assertEquals(v[0], 156);
+      assertEquals(v[1], 156);
+      assertEquals(v[2], 20);
+      assertEquals(v[3], 20);
+
+      v = gu.getIntersection(30, 30, 40, 60, 0, 0, 176, 176, t);
+      assertNotNull(v);
+      assertEquals(v[0], 30);
+      assertEquals(v[1], 30);
+      assertEquals(v[2], 40);
+      assertEquals(v[3], 60);
+
+      v = gu.getIntersection(0, 0, 176, 176, 30, 30, 40, 60, t);
+      assertNotNull(v);
+      assertEquals(v[0], 30);
+      assertEquals(v[1], 30);
+      assertEquals(v[2], 40);
+      assertEquals(v[3], 60);
+
+      v = gu.getIntersection(0, 0, 176, 176, 10, 10, 176, 176, t);
+      assertNotNull(v);
+      assertEquals(v[0], 10);
+      assertEquals(v[1], 10);
+      assertEquals(v[2], 166);
+      assertEquals(v[3], 166);
+   }
+
+   public void testUnion() {
+      int[] t = new int[4];
+      //first is fully inside
+      int[] v = gu.getUnion(10, 10, 40, 40, 0, 0, 200, 140, t);
+      assertNotNull(v);
+      assertEquals(v[0], 0);
+      assertEquals(v[1], 0);
+      assertEquals(v[2], 200);
+      assertEquals(v[3], 140);
+
+      //first is fully outside
+      v = gu.getUnion(0, 0, 200, 140, 10, 10, 40, 40, t);
+      assertNotNull(v);
+      assertEquals(v[0], 0);
+      assertEquals(v[1], 0);
+      assertEquals(v[2], 200);
+      assertEquals(v[3], 140);
+
+      v = gu.getUnion(0, 0, 200, 140, -1, -2, 40, 150, t);
+      assertEquals(v[0], -1);
+      assertEquals(v[1], -2);
+      assertEquals(v[2], 201);
+      assertEquals(v[3], 150);
+
+      v = gu.getUnion(5, 5, 10, 15, 40, 45, 55, 60, t);
+      assertEquals(v[0], 5);
+      assertEquals(v[1], 5);
+      assertEquals(v[2], 90);
+      assertEquals(v[3], 100);
+
+   }
    public void testHolesTwo() {
 
       int x = 0;
