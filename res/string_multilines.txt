@@ -1,0 +1,40 @@
+Business	DrawingBoard#inputKey #Current CK
+			#ClassKey Grid
+			FLAG_ROOT
+					1 true	Gradient Colors
+					2 false	Fill Boxes
+					4 false	isGrill/Box
+					8 true	Iterate Over Color Array
+					16 false	isShadow
+			FLAG_STAR
+			FLAG_POUND
+					1 false	Full Fill of Area
+			FLAG_ZERO
+					1 false	Do Arts Different Color
+					2 false	Do Arts
+			FLAG_FIRE
+					8 false	Gradient Same Colors
+			FLAG_SPECIAL
+			
+			ROOT_28	2	Size	[0,40]
+			ROOT_X	5	Square Size W	[1,40]
+			ROOT_Y	5	Square Size H	[1,40]
+			POUND_46	0	Line Spacing Size	[0,2]
+			STAR_28	160	Height
+			STAR_46	160	Width
+			STAR_X	5	X
+			STAR_Y	5	Y
+			ZERO_28	2	Shadow Size	[0,40]
+			ZERO_46	3	arts Size	[0,40]
+			ZERO_X	3	Color Arts Index	[0,8]
+			ZERO_Y	20	Number of Colors	[1,100]
+			
+			#ClassColors FctID=0	(82,34,54,143) (56,157,68,54) (65,185,56,229) (204,23,98,174) (199,249,249,225) (165,185,197,162) (209,51,97,111) (13,180,116,46) 
+				(137,238,107,129) (225,88,85,50) (93,214,12,130) (97,225,73,131) (229,204,110,59) (161,124,218,138) (129,237,179,101) (176,85,225,236) (135,34,13,127) (23,197,3,46) (70,142,239,166) (164,46,254,127) (142,141,90,120) (223,12,92,0) (191,17,240,80) (238,187,193,76) 
+				
+			Links
+			#ClassKey Skew2
+			#ClassKey Mosaic1
+			#ClassKey Gradient 
+			#ClassKey GPass
+			

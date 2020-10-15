@@ -19,6 +19,16 @@ public class TestCharUtils extends TestCaseBentley {
       super(true);
    }
 
+   public void testContains() {
+
+      final char[] C_TEXTBREAKS = { ' ', '?', ';', ',', '.', '!', ':', '-', '=', '(', ')', '[', ']' };
+
+      assertEquals(true, CharUtils.contains(C_TEXTBREAKS, ' '));
+      assertEquals(true, CharUtils.contains(C_TEXTBREAKS, '?'));
+      assertEquals(true, CharUtils.contains(C_TEXTBREAKS, ']'));
+      assertEquals(false, CharUtils.contains(C_TEXTBREAKS, 'a'));
+   }
+
    @Test
    public void testUnMapZero() throws Exception {
       assertEquals('a', uu.unMapZero(0, CharUtils.PLANE_0_EN));
@@ -59,12 +69,11 @@ public class TestCharUtils extends TestCaseBentley {
 
       assertEquals(1, CharUtils.getFirstIndex("45", "i45b45g".toCharArray()));
       assertEquals(4, CharUtils.getFirstIndex("45", "i45b45g".toCharArray(), 3));
-      
+
       //border cases
       assertEquals(-1, CharUtils.getFirstIndex("", "i45b45g".toCharArray()));
       assertEquals(-1, CharUtils.getFirstIndex("", "".toCharArray()));
 
-      
       assertEquals(4, CharUtils.getFirstIndex("this", "eat this now".toCharArray()));
       assertEquals(9, CharUtils.getFirstIndex("now", "eat this now".toCharArray()));
       assertEquals(1, CharUtils.getFirstIndex("now", "enownow".toCharArray()));
