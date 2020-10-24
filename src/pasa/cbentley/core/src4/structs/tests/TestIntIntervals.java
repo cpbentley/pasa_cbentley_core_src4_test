@@ -47,6 +47,54 @@ public class TestIntIntervals extends TestCaseBentley {
       assertEquals("10,5,20,10,100,5,120,4,200,10", uc.getIU().debugString(ii.getArrayOffsetLen()));
    }
 
+   public void testGetIntersection() {
+      IntIntervals ii = new IntIntervals(uc);
+      ii.addInterval(100, 5); //10
+      ii.addInterval(10, 5); //10
+      ii.addInterval(20, 10);
+      ii.addInterval(200, 10);
+      ii.addInterval(120, 4);
+      
+      IntInterval[] inter = ii.getIntersection(8,5);
+      assertEquals(1, inter.length);
+      assertEquals(10, inter[0].getOffset());
+      
+      inter = ii.getIntersection(8,55);
+      assertEquals(2, inter.length);
+      assertEquals(10, inter[0].getOffset());
+      assertEquals(20, inter[1].getOffset());
+      
+      inter = ii.getIntersection(90,255);
+      assertEquals(3, inter.length);
+      assertEquals(100, inter[0].getOffset());
+      assertEquals(120, inter[1].getOffset());
+      assertEquals(200, inter[2].getOffset());
+   }
+   
+   public void testGetIntervalIntersectIntersectIndex() {
+      IntIntervals ii = new IntIntervals(uc);
+      ii.addInterval(100, 5); //10
+      ii.addInterval(10, 5); //10
+      ii.addInterval(20, 10);
+      ii.addInterval(200, 10);
+      ii.addInterval(120, 4);
+
+      assertEquals(null, ii.getIntervalIntersect(0));
+      assertEquals(null, ii.getIntervalIntersect(-1));
+      assertEquals(null, ii.getIntervalIntersect(1000));
+
+      assertEquals(100, ii.getIntervalIntersect(101).getOffset());
+
+      assertEquals(10, ii.getIntervalIntersect(12).getOffset());
+
+      assertEquals(20, ii.getIntervalIntersect(22).getOffset());
+
+      assertEquals(200, ii.getIntervalIntersect(202).getOffset());
+
+      assertEquals(120, ii.getIntervalIntersect(122).getOffset());
+
+   }
+
    public void testAddAfter3() {
 
       IntIntervals ii = new IntIntervals(uc);
@@ -162,21 +210,21 @@ public class TestIntIntervals extends TestCaseBentley {
 
       IntIntervals ii = new IntIntervals(uc);
       ii.addInterval(10, 5); //10-15
-      ii.addInterval(19, 1); 
-      
+      ii.addInterval(19, 1);
+
       ii.addInterval(11, 8); //11-19
 
       assertEquals("10,10", uc.getIU().debugString(ii.getArrayOffsetLen()));
       assertEquals(1, ii.getSize());
 
    }
-   
+
    public void testAddInsideExtentRight1Middle() {
 
       IntIntervals ii = new IntIntervals(uc);
 
-      ii.addInterval(1, 2); 
-      ii.addInterval(100, 2); 
+      ii.addInterval(1, 2);
+      ii.addInterval(100, 2);
 
       ii.addInterval(10, 5); //10-15
       ii.addInterval(11, 8); //11-19
