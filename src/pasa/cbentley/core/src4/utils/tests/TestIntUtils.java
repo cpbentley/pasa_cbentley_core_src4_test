@@ -4,6 +4,8 @@
  */
 package pasa.cbentley.core.src4.utils.tests;
 
+import java.util.Random;
+
 import org.junit.Test;
 
 import pasa.cbentley.core.src4.utils.BitUtils;
@@ -212,7 +214,7 @@ public class TestIntUtils extends TestCaseBentley {
       assertEquals(4, IntUtils.getFirstIndexASC(5, ar, 0, ar.length));
 
    }
-   
+
    public void testGetIndexSimilarValueDown() {
       int[] ar = new int[] { 5, 5, 5, 89 };
       assertEquals(0, IntUtils.getIndexSimilarValueDown(0, ar, 0, ar.length));
@@ -228,6 +230,7 @@ public class TestIntUtils extends TestCaseBentley {
       assertEquals(2, IntUtils.getIndexSimilarValueUp(2, ar, 0, ar.length));
       assertEquals(3, IntUtils.getIndexSimilarValueDown(3, ar, 0, ar.length));
    }
+
    @Test
    public void testReadIntLE() throws Exception {
       System.out.println("testReadIntLE");
@@ -428,5 +431,29 @@ public class TestIntUtils extends TestCaseBentley {
       IntUtils.writeIntBEUnsigned(data, 0, Integer.MAX_VALUE + 1);
 
       assertEquals(Integer.MAX_VALUE + 1, IntUtils.readIntBEUnsigned(data, 0));
+   }
+
+   public void testShuffle() {
+
+      int[] ar = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+      Random r = new Random(50000);
+      uc.setRandom(r);
+
+      uc.getIU().shuffle(ar);
+
+      System.out.println(uc.getIU().toStringIntArray(ar));
+      
+      uc.getIU().shuffle(ar);
+
+      System.out.println(uc.getIU().toStringIntArray(ar));
+
+      ar = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+      System.out.println("----");
+      uc.getIU().shuffle(ar, 1, 5);
+      System.out.println(uc.getIU().toStringIntArray(ar));
+      uc.getIU().shuffle(ar, 1, 5);
+      System.out.println(uc.getIU().toStringIntArray(ar));
+
    }
 }
