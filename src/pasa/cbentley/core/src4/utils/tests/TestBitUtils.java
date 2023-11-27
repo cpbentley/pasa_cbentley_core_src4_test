@@ -485,6 +485,21 @@ public class TestBitUtils extends TestCaseBentley {
 
    }
 
+   public void testCompare() {
+
+      byte[] ar1 = new byte[] { 0, 0, 0, 0 };
+      byte[] ar2 = new byte[] { 0, 0, 0, 0 };
+
+      assertEquals(0, bu.compare(ar1, ar2));
+
+      ar1 = new byte[] { 1, 0, 0 };
+      ar2 = new byte[] { 0, 0, 0 };
+
+      assertEquals(1, bu.compare(ar1, ar2));
+      assertEquals(-1, bu.compare(ar2, ar1));
+
+   }
+
    public void testShiftBitUp() {
       boolean debug = false;
 

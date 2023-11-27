@@ -27,6 +27,24 @@ public class TestBufferObject extends TestCaseBentley {
       bo.add("Hi");
       assertEquals(2, bo.getSize());
    }
+   
+   public void testSwap() {
+      BufferObject bo = new BufferObject(uc, 5);
+
+      assertEquals(0, bo.getSize());
+
+      bo.add("1");
+      bo.add("2");
+      bo.add("3");
+      bo.add("4");
+      
+      assertEquals(4, bo.getSize());
+
+      bo.swap(0, 1);
+      
+      assertEquals("2", bo.get(0));
+      assertEquals("1", bo.get(1));
+   }
 
    public void testInsertAt() {
 
