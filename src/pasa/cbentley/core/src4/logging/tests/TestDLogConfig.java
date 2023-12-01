@@ -82,7 +82,7 @@ public class TestDLogConfig extends TestCaseBentley implements ITechTags, ITechC
    public void testConfigFlagTagAllPositives() {
 
       DLogConfig c = new DLogConfig(uc);
-      c.setFlagPrint(MASTER_FLAG_02_OPEN_ALL_PRINT, true);
+      c.setFlagMaster(MASTER_FLAG_02_OPEN_ALL_PRINT, true);
 
       c.setFlagTag(FLAG_05_PRINT_UI, false);
       c.setFlagTag(FLAG_06_PRINT_WORK, false);
@@ -107,13 +107,13 @@ public class TestDLogConfig extends TestCaseBentley implements ITechTags, ITechC
 
    public void testThreadName() {
       DLogConfig c = new DLogConfig(uc);
-      c.setFlagPrint(MASTER_FLAG_02_OPEN_ALL_PRINT, true);
+      c.setFlagMaster(MASTER_FLAG_02_OPEN_ALL_PRINT, true);
       DLogEntry entry = new DLogEntry();
       entry.setDevFlags(DEV_4_THREAD);
 
       DLogEntryOfConfig ec = entry.computeDLogEntryOfConfig(c);
 
-      assertEquals(true, ec.hasConfigFlag(ITechConfig.CONFIG_FLAG_04_SHOW_THREAD));
+      assertEquals(true, ec.hasFormatFlag(ITechConfig.FORMAT_FLAG_04_THREAD));
       assertEquals(true, ec.isAccepted());
       assertNotNull(entry.getThreadName());
       assertEquals("main", entry.getThreadName());
