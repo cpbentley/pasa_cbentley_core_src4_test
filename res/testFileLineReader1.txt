@@ -1,0 +1,6 @@
+#first line
+avoid
+check this out
+no blank line to avoid potential problems
+#avoid this
+again
