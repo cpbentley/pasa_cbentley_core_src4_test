@@ -17,12 +17,13 @@ public class TestStringUtils extends TestCaseBentley {
    private StringUtils su = new StringUtils(new UCtx());
 
    public TestStringUtils() {
-      super(true);
+      setFlagHideSystemOutTrue();
    }
 
    public void setupAbstract() {
 
    }
+
    public void testGetBreakTabs() {
 
       String word = "Hello\tWorld";
@@ -31,58 +32,142 @@ public class TestStringUtils extends TestCaseBentley {
 
       int count = 0;
       assertEquals(4, breakOffsets.length);
-      assertEquals(0, breakOffsets[count++]);
-      assertEquals(5, breakOffsets[count++]);
-      assertEquals(6, breakOffsets[count++]);
-      assertEquals(5, breakOffsets[count++]);
-      
+      assertEquals(0, breakOffsets[count++]); //first chunk starts at 0
+      assertEquals(5, breakOffsets[count++]); //it has a length of 5
+      assertEquals(6, breakOffsets[count++]); //next chunk starts at 6
+      assertEquals(5, breakOffsets[count++]); //has a length of 5
+
+      word = "Hello\tWorld\n\tMoon\t ";
+
+      breakOffsets = su.getBreaksTab(word);
+      int index = 0;
+      int len = 0;
+      count = 0;
+      assertEquals(8, breakOffsets.length);
+
+      index = breakOffsets[count++];
+      len = breakOffsets[count++];
+      assertEquals(0, index);
+      assertEquals(5, len);
+      assertEquals("Hello", word.substring(index, index + len));
+
+      index = breakOffsets[count++];
+      len = breakOffsets[count++];
+      assertEquals(6, index);
+      assertEquals(6, len);
+      assertEquals("World\n", word.substring(index, index + len));
+
+      index = breakOffsets[count++];
+      len = breakOffsets[count++];
+      assertEquals("Moon", word.substring(index, index + len));
+
+      index = breakOffsets[count++];
+      len = breakOffsets[count++];
+      assertEquals(" ", word.substring(index, index + len));
+
    }
+
+   /**
+    * 
+    */
+   public void testGetBreakNaturalRelative() {
+
+      String word = "Hello\nWorld";
+
+      char[] chars = word.toCharArray();
+      int offset = 3;
+      int len = 6;
+      int[] breaks = su.getBreaksLineNatural(chars, offset, len);
+      int count = 0;
+      assertEquals(6, breaks.length);
+      assertEquals(0, breaks[count++]);
+      assertEquals(2, breaks[count++]);
+      assertEquals(-1, breaks[count++]);
+      assertEquals(3, breaks[count++]);
+      assertEquals(3, breaks[count++]);
+      assertEquals(-1, breaks[count++]);
+
+      //values are relative to offset
+      assertEquals("lo", new String(chars, offset + breaks[0], breaks[1]));
+      assertEquals("Wor", new String(chars, offset + breaks[3], breaks[4]));
+
+      word = "Hello\r\nWorld";
+
+      breaks = su.getBreaksLineNatural(chars, offset, len);
+      count = 0;
+      
+      assertEquals(6, breaks.length);
+      assertEquals(0, breaks[count++]);
+      assertEquals(2, breaks[count++]);
+      assertEquals(-1, breaks[count++]);
+      assertEquals(3, breaks[count++]);
+      assertEquals(3, breaks[count++]);
+      assertEquals(-1, breaks[count++]);
+
+      //values are relative to offset
+      assertEquals("lo", new String(chars, offset + breaks[0], breaks[1]));
+      assertEquals("Wor", new String(chars, offset + breaks[3], breaks[4]));
+
+   }
+
    public void testGetBreakNaturalBasic() {
 
       String word = "Hello World";
 
+      //trimmed
       int[] breakOffsets = su.getBreaksLineNatural(word);
 
-      assertEquals(2, breakOffsets.length);
+      assertEquals(3, breakOffsets.length);
       assertEquals(0, breakOffsets[0]);
       assertEquals(11, breakOffsets[1]);
 
       breakOffsets = su.getBreaksLineNatural("Hello\nWorld");
 
       int count = 0;
-      assertEquals(4, breakOffsets.length);
+      assertEquals(6, breakOffsets.length);
       assertEquals(0, breakOffsets[count++]);
       assertEquals(5, breakOffsets[count++]);
+      assertEquals(-1, breakOffsets[count++]);
       assertEquals(6, breakOffsets[count++]);
       assertEquals(5, breakOffsets[count++]);
+      assertEquals(-1, breakOffsets[count++]);
 
       breakOffsets = su.getBreaksLineNatural("Hello\r\nWorld");
 
       count = 0;
-      assertEquals(4, breakOffsets.length);
+      assertEquals(6, breakOffsets.length);
       assertEquals(0, breakOffsets[count++]);
       assertEquals(5, breakOffsets[count++]);
+      assertEquals(-1, breakOffsets[count++]);
       assertEquals(7, breakOffsets[count++]); //+1 offset because \r
       assertEquals(5, breakOffsets[count++]);
+      assertEquals(-1, breakOffsets[count++]);
 
       breakOffsets = su.getBreaksLineNatural("A\nB\nC\nD");
-      assertEquals(8, breakOffsets.length);
+      assertEquals(12, breakOffsets.length);
 
       breakOffsets = su.getBreaksLineNatural("A\nB\nC\nD\n");
-      assertEquals(10, breakOffsets.length);
+      assertEquals(15, breakOffsets.length);
       count = 0;
       assertEquals(0, breakOffsets[count++]); //position of A
       assertEquals(1, breakOffsets[count++]); //len of A
+      assertEquals(-1, breakOffsets[count++]);
 
       assertEquals(2, breakOffsets[count++]); //position of B
       assertEquals(1, breakOffsets[count++]); //len of B
+      assertEquals(-1, breakOffsets[count++]);
 
       assertEquals(4, breakOffsets[count++]); //position of C
       assertEquals(1, breakOffsets[count++]); //len of C
+      assertEquals(-1, breakOffsets[count++]);
+
       assertEquals(6, breakOffsets[count++]); //position of D
       assertEquals(1, breakOffsets[count++]); //len of D
+      assertEquals(-1, breakOffsets[count++]);
+
       assertEquals(8, breakOffsets[count++]); //position of ''
       assertEquals(0, breakOffsets[count++]); //len of ''
+      assertEquals(-1, breakOffsets[count++]);
 
    }
 
@@ -98,58 +183,70 @@ public class TestStringUtils extends TestCaseBentley {
    public void testGetBreakNaturalBorderCases() {
       int[] breakOffsets = null;
       int count = 0;
-      
+
       breakOffsets = su.getBreaksLineNatural("");
       count = 0;
-      assertEquals(2, breakOffsets.length);
+      assertEquals(3, breakOffsets.length);
       assertEquals(0, breakOffsets[count++]);
       assertEquals(0, breakOffsets[count++]);
-      
+
       breakOffsets = su.getBreaksLineNatural("\n");
-      count = 0;
-      assertEquals(4, breakOffsets.length);
-      assertEquals(0, breakOffsets[count++]);
-      assertEquals(0, breakOffsets[count++]);
-      assertEquals(1, breakOffsets[count++]);
-      assertEquals(0, breakOffsets[count++]);
-      
-      breakOffsets = su.getBreaksLineNatural("\n\n");
       count = 0;
       assertEquals(6, breakOffsets.length);
       assertEquals(0, breakOffsets[count++]);
       assertEquals(0, breakOffsets[count++]);
+      assertEquals(-1, breakOffsets[count++]);
       assertEquals(1, breakOffsets[count++]);
       assertEquals(0, breakOffsets[count++]);
+      assertEquals(-1, breakOffsets[count++]);
+
+      breakOffsets = su.getBreaksLineNatural("\n\n");
+      count = 0;
+      assertEquals(9, breakOffsets.length);
+      assertEquals(0, breakOffsets[count++]);
+      assertEquals(0, breakOffsets[count++]);
+      assertEquals(-1, breakOffsets[count++]);
+      assertEquals(1, breakOffsets[count++]);
+      assertEquals(0, breakOffsets[count++]);
+      assertEquals(-1, breakOffsets[count++]);
       assertEquals(2, breakOffsets[count++]);
       assertEquals(0, breakOffsets[count++]);
-      
-      
+      assertEquals(-1, breakOffsets[count++]);
+
       breakOffsets = su.getBreaksLineNatural("\n\n\n");
       count = 0;
-      assertEquals(8, breakOffsets.length);
+      assertEquals(12, breakOffsets.length);
       assertEquals(0, breakOffsets[count++]);
       assertEquals(0, breakOffsets[count++]);
+      assertEquals(-1, breakOffsets[count++]);
       assertEquals(1, breakOffsets[count++]);
       assertEquals(0, breakOffsets[count++]);
+      assertEquals(-1, breakOffsets[count++]);
       assertEquals(2, breakOffsets[count++]);
       assertEquals(0, breakOffsets[count++]);
+      assertEquals(-1, breakOffsets[count++]);
       assertEquals(3, breakOffsets[count++]);
       assertEquals(0, breakOffsets[count++]);
-      
+      assertEquals(-1, breakOffsets[count++]);
+
       String str = "\n\n\nA";
       assertEquals(4, str.length());
 
       breakOffsets = su.getBreaksLineNatural(str);
       count = 0;
-      assertEquals(8, breakOffsets.length);
+      assertEquals(12, breakOffsets.length);
       assertEquals(0, breakOffsets[count++]);
       assertEquals(0, breakOffsets[count++]);
+      assertEquals(-1, breakOffsets[count++]);
       assertEquals(1, breakOffsets[count++]);
       assertEquals(0, breakOffsets[count++]);
+      assertEquals(-1, breakOffsets[count++]);
       assertEquals(2, breakOffsets[count++]);
       assertEquals(0, breakOffsets[count++]);
+      assertEquals(-1, breakOffsets[count++]);
       assertEquals(3, breakOffsets[count++]);
       assertEquals(1, breakOffsets[count++]);
+      assertEquals(-1, breakOffsets[count++]);
    }
 
    public void testGetBreaksWordNoSpace() {
