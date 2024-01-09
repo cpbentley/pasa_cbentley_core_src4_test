@@ -17,10 +17,7 @@ public class TestStatorWriter extends TestCaseBentley {
    public void testWriterEmpty() {
 
       StatorWriter sw = new StatorWriter(uc);
-
       assertEquals(null, sw.getData());
-      
-      
       byte[] data = sw.serialize();
       
       

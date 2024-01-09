@@ -24,6 +24,31 @@ public class TestStringUtils extends TestCaseBentley {
 
    }
 
+   public void testIndexOf() {
+
+      String word = "search";
+      String text = "#$data search normal ##";
+
+      int index = StringUtils.indexOf(text.toCharArray(), 2, 15, word, 3);
+      assertEquals(index, 5);
+
+      word = "me";
+      text = "1me2me3me4me5me";
+
+      index = StringUtils.indexOf(text.toCharArray(), 0, text.length(), word, 0);
+      assertEquals(index, 1);
+      index = StringUtils.indexOf(text.toCharArray(), 0, text.length(), word, 1);
+      assertEquals(index, 1);
+      index = StringUtils.indexOf(text.toCharArray(), 0, text.length(), word, 2);
+      assertEquals(index, 4);
+      
+      // "e2me3me4me5"
+      index = StringUtils.indexOf(text.toCharArray(), 2, text.length() - 4, word, 0);
+      assertEquals(index, 2);
+      index = StringUtils.indexOf(text.toCharArray(), 2, text.length() - 4, word, 3);
+      assertEquals(index, 5);
+   }
+
    public void testGetBreakTabs() {
 
       String word = "Hello\tWorld";
@@ -67,6 +92,11 @@ public class TestStringUtils extends TestCaseBentley {
 
    }
 
+   public void testSpaceEnVSRu() {
+
+      assertEquals(true, StringUtils.RU_SPACE == StringUtils.ENGLISH_SPACE);
+   }
+
    /**
     * 
     */
@@ -95,7 +125,7 @@ public class TestStringUtils extends TestCaseBentley {
 
       breaks = su.getBreaksLineNatural(chars, offset, len);
       count = 0;
-      
+
       assertEquals(6, breaks.length);
       assertEquals(0, breaks[count++]);
       assertEquals(2, breaks[count++]);
@@ -270,6 +300,38 @@ public class TestStringUtils extends TestCaseBentley {
       assertEquals(1, breakOffsets[0]);
       assertEquals(3, breakOffsets[1]);
 
+   }
+   
+   public void testGetBreaksWordInvisible() {
+      String data = "##word1   word2, word3! word4. word5? word-word6 $$";
+      char[] cs = data.toCharArray();
+      int offset = 2;
+      int len = cs.length - 4;
+      
+      IntBuffer ib = new IntBuffer(uc);
+      boolean invisibleOnly = true;
+      su.getBreaksWord(cs, offset, len, invisibleOnly , ib);
+      
+      int count = 0;
+      assertEquals("word1", new String(cs,ib.get(count++),ib.get(count++)));
+      assertEquals("word2,", new String(cs,ib.get(count++),ib.get(count++)));
+      assertEquals("word3!", new String(cs,ib.get(count++),ib.get(count++)));
+      assertEquals("word4.", new String(cs,ib.get(count++),ib.get(count++)));
+      assertEquals("word5?", new String(cs,ib.get(count++),ib.get(count++)));
+      assertEquals("word-word6", new String(cs,ib.get(count++),ib.get(count++)));
+      
+      ib.clear();
+      
+      invisibleOnly = false;
+      su.getBreaksWord(cs, offset, len, invisibleOnly , ib);
+      
+       count = 0;
+      assertEquals("word1", new String(cs,ib.get(count++),ib.get(count++)));
+      assertEquals("word2", new String(cs,ib.get(count++),ib.get(count++)));
+      assertEquals("word3", new String(cs,ib.get(count++),ib.get(count++)));
+      assertEquals("word4", new String(cs,ib.get(count++),ib.get(count++)));
+      assertEquals("word5", new String(cs,ib.get(count++),ib.get(count++)));
+      assertEquals("word-word6", new String(cs,ib.get(count++),ib.get(count++)));
    }
 
    public void testGetBreaksWord() {
