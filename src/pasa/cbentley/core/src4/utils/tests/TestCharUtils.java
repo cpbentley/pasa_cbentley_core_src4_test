@@ -16,7 +16,7 @@ public class TestCharUtils extends TestCaseBentley {
    CharUtils uu = new CharUtils(new UCtx());
 
    public TestCharUtils() {
-      super(true);
+      super();
    }
 
    public void testContains() {
@@ -29,6 +29,16 @@ public class TestCharUtils extends TestCaseBentley {
       assertEquals(false, CharUtils.contains(C_TEXTBREAKS, 'a'));
    }
 
+   public void testIntCast() {
+      char c = '!';
+      
+      int i = c;
+      
+      char ci = (char)i;
+      
+      assertEquals('!', ci);
+   }
+   
    @Test
    public void testUnMapZero() throws Exception {
       assertEquals('a', uu.unMapZero(0, CharUtils.PLANE_0_EN));
