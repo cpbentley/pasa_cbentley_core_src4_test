@@ -441,6 +441,117 @@ public class TestIntIntervals extends TestCaseBentley {
 
    }
 
+   public void testAdjacentLeftOverRightPayloadDifferent() {
+      IntIntervals ii = new IntIntervals(uc);
+      ii.setPayLoadCheck(true);
+
+      ii.addIntervalOffset(0, 35, "main");
+
+      ii.addIntervalOffset(3, 5, "one");
+
+      assertEquals(3, ii.getSize());
+
+      assertEquals("[0,2] [3,4] [5,34]", ii.toStringOffsetBracket());
+
+      //adjacent to the left and over the right
+      ii.addIntervalOffset(5, 8, "two");
+
+      assertEquals(4, ii.getSize());
+      assertEquals("[0,2] [3,4] [5,7] [8,34]", ii.toStringOffsetBracket());
+
+      assertEquals("main", ii.getInterval(0).getPayload());
+      assertEquals("one", ii.getInterval(1).getPayload());
+      assertEquals("two", ii.getInterval(2).getPayload());
+      assertEquals("main", ii.getInterval(3).getPayload());
+   }
+   
+   public void testSameLeftPayloadDifferent() {
+      IntIntervals ii = new IntIntervals(uc);
+      ii.setPayLoadCheck(true);
+
+      ii.addIntervalOffset(0, 35, "main");
+
+      ii.addIntervalOffset(3, 5, "one");
+
+      assertEquals(3, ii.getSize());
+
+      assertEquals("[0,2] [3,4] [5,34]", ii.toStringOffsetBracket());
+
+      //adjacent to the left and over the right
+      ii.addIntervalOffset(3, 5, "two");
+
+      assertEquals(3, ii.getSize());
+      assertEquals("[0,2] [3,4] [5,34]", ii.toStringOffsetBracket());
+
+      assertEquals("main", ii.getInterval(0).getPayload());
+      assertEquals("two", ii.getInterval(1).getPayload());
+      assertEquals("main", ii.getInterval(2).getPayload());
+   }
+
+   public void testSameRightPayloadDifferent() {
+      IntIntervals ii = new IntIntervals(uc);
+      ii.setPayLoadCheck(true);
+
+      ii.addIntervalOffset(0, 35, "main");
+
+      ii.addIntervalOffset(3, 5, "one");
+
+      assertEquals(3, ii.getSize());
+
+      assertEquals("[0,2] [3,4] [5,34]", ii.toStringOffsetBracket());
+
+      //adjacent to the left and over the right
+      ii.addIntervalOffset(5, 35, "two");
+
+      assertEquals(3, ii.getSize());
+      assertEquals("[0,2] [3,4] [5,34]", ii.toStringOffsetBracket());
+
+      assertEquals("main", ii.getInterval(0).getPayload());
+      assertEquals("one", ii.getInterval(1).getPayload());
+      assertEquals("two", ii.getInterval(2).getPayload());
+   }
+
+   
+   public void testAdjacentLeftOverRightPayloadSameLeft() {
+      IntIntervals ii = new IntIntervals(uc);
+      ii.setPayLoadCheck(true);
+
+      ii.addIntervalOffset(0, 35, "main");
+
+      ii.addIntervalOffset(3, 5, "one");
+
+      assertEquals(3, ii.getSize());
+
+      assertEquals("[0,2] [3,4] [5,34]", ii.toStringOffsetBracket());
+
+      //adjacent to the left and over the right
+      ii.addIntervalOffset(5, 8, "one");
+
+      assertEquals(3, ii.getSize());
+      assertEquals("[0,2] [3,7] [8,34]", ii.toStringOffsetBracket());
+
+   }
+
+   public void testAdjacentLeftOverRightPayloadSameRight() {
+      IntIntervals ii = new IntIntervals(uc);
+      ii.setPayLoadCheck(true);
+
+      ii.addIntervalOffset(0, 35, "main");
+
+      ii.addIntervalOffset(3, 5, "one");
+
+      assertEquals(3, ii.getSize());
+
+      assertEquals("[0,2] [3,4] [5,34]", ii.toStringOffsetBracket());
+
+      //adjacent to the left and over the right
+      ii.addIntervalOffset(5, 8, "main");
+
+      assertEquals(3, ii.getSize());
+      assertEquals("[0,2] [3,4] [5,34]", ii.toStringOffsetBracket());
+
+   }
+
    public void testGetIntersection() {
       IntIntervals ii = new IntIntervals(uc);
       ii.addInterval(100, 5); //10
@@ -492,6 +603,66 @@ public class TestIntIntervals extends TestCaseBentley {
 
    }
 
+   public void testIntersectLeftIntersectRightPayloadDifferent() {
+      IntIntervals ii = new IntIntervals(uc);
+      ii.setPayLoadCheck(true);
+
+      ii.addIntervalOffset(0, 35, "main");
+
+      ii.addIntervalOffset(3, 10, "one");
+
+      assertEquals(3, ii.getSize());
+
+      assertEquals("[0,2] [3,9] [10,34]", ii.toStringOffsetBracket());
+
+      //adjacent to the left and over the right
+      ii.addIntervalOffset(5, 12, "two");
+
+      assertEquals(4, ii.getSize());
+      assertEquals("[0,2] [3,4] [5,11] [12,34]", ii.toStringOffsetBracket());
+
+   }
+
+   public void testIntersectLeftIntersectRightPayloadSameLeft() {
+      IntIntervals ii = new IntIntervals(uc);
+      ii.setPayLoadCheck(true);
+
+      ii.addIntervalOffset(0, 35, "main");
+
+      ii.addIntervalOffset(3, 10, "one");
+
+      assertEquals(3, ii.getSize());
+
+      assertEquals("[0,2] [3,9] [10,34]", ii.toStringOffsetBracket());
+
+      //adjacent to the left and over the right
+      ii.addIntervalOffset(5, 12, "one");
+
+      assertEquals(3, ii.getSize());
+      assertEquals("[0,2] [3,11] [12,34]", ii.toStringOffsetBracket());
+
+   }
+
+   public void testIntersectLeftIntersectRightPayloadSameRight() {
+      IntIntervals ii = new IntIntervals(uc);
+      ii.setPayLoadCheck(true);
+
+      ii.addIntervalOffset(0, 35, "main");
+
+      ii.addIntervalOffset(3, 10, "one");
+
+      assertEquals(3, ii.getSize());
+
+      assertEquals("[0,2] [3,9] [10,34]", ii.toStringOffsetBracket());
+
+      //adjacent to the left and over the right
+      ii.addIntervalOffset(5, 12, "main");
+
+      assertEquals(3, ii.getSize());
+      assertEquals("[0,2] [3,4] [5,34]", ii.toStringOffsetBracket());
+
+   }
+
    public void testMergeBetween2Adjacents() {
       IntIntervals ii = new IntIntervals(uc);
 
@@ -533,7 +704,7 @@ public class TestIntIntervals extends TestCaseBentley {
    public void testMergeBetween2AdjacentsPayloads() {
       IntIntervals ii = new IntIntervals(uc);
       ii.setPayLoadCheck(true);
-      
+
       IntInterval i1 = new IntInterval(uc);
       i1.setOffsets(10, 15);
       i1.setPayload("i1");
@@ -564,7 +735,7 @@ public class TestIntIntervals extends TestCaseBentley {
    public void testMergeBetween2AdjacentsPayloads1MergeLeft() {
       IntIntervals ii = new IntIntervals(uc);
       ii.setPayLoadCheck(true);
-      
+
       IntInterval i1 = new IntInterval(uc);
       i1.setOffsets(10, 15);
       i1.setPayload("samepay");
@@ -597,7 +768,7 @@ public class TestIntIntervals extends TestCaseBentley {
    public void testMergeBetween2AdjacentsPayloads1MergeRight() {
       IntIntervals ii = new IntIntervals(uc);
       ii.setPayLoadCheck(true);
-      
+
       IntInterval i1 = new IntInterval(uc);
       i1.setOffsets(10, 15);
       i1.setPayload("i1");
@@ -619,22 +790,21 @@ public class TestIntIntervals extends TestCaseBentley {
 
       ii.addInterval(i3);
 
-
       assertEquals("10,15-15,30", ii.toStringOffsets());
       assertEquals(2, ii.getSize());
 
    }
-   
+
    public void testMergeBetween2AdjacentsPayloads1MergeRightExtremities() {
       IntIntervals ii = new IntIntervals(uc);
       ii.setPayLoadCheck(true);
-      
+
       IntInterval i57 = new IntInterval(uc);
       i57.setOffsets(5, 7);
       i57.setPayload("pay57");
-      
+
       ii.addInterval(i57);
-      
+
       IntInterval i1 = new IntInterval(uc);
       i1.setOffsets(10, 15);
       i1.setPayload("pay1");
@@ -652,10 +822,9 @@ public class TestIntIntervals extends TestCaseBentley {
       i50.setOffsets(50, 60);
       i50.setPayload("pay50");
       ii.addInterval(i50);
-      
+
       assertEquals("5,7-10,15-20,30-50,60", ii.toStringOffsets());
 
-      
       IntInterval i3 = new IntInterval(uc);
       i3.setOffsets(15, 20);
       i3.setPayload("samepay");
@@ -664,7 +833,7 @@ public class TestIntIntervals extends TestCaseBentley {
 
       assertEquals("5,7-10,15-15,30-50,60", ii.toStringOffsets());
       assertEquals(4, ii.getSize());
-      
+
       IntInterval[] intersection = ii.getIntersection(12, 50);
       assertEquals(3, intersection.length);
       assertEquals(10, intersection[0].getOffset());
@@ -672,17 +841,19 @@ public class TestIntIntervals extends TestCaseBentley {
       assertEquals(50, intersection[2].getOffset());
 
    }
-   
-   public void testMergeComplex1Payloads() {
+
+   /**
+    * Payloads changes everything
+    */
+   public void testMergeComplex1() {
       IntIntervals ii = new IntIntervals(uc);
-      ii.setPayLoadCheck(true);
-      
+
       IntInterval i57 = new IntInterval(uc);
       i57.setOffsets(5, 7);
       i57.setPayload("pay5");
-      
+
       ii.addInterval(i57);
-      
+
       IntInterval i1 = new IntInterval(uc);
       i1.setOffsets(10, 15);
       i1.setPayload("pay10");
@@ -700,7 +871,56 @@ public class TestIntIntervals extends TestCaseBentley {
       i50.setOffsets(50, 60);
       i50.setPayload("pay50");
       ii.addInterval(i50);
-      
+
+      assertEquals("5,7-10,15-20,30-50,60", ii.toStringOffsets());
+
+      IntInterval i17 = new IntInterval(uc);
+      i17.setOffsets(17, 18);
+      i17.setPayload("payi");
+
+      ii.addInterval(i17);
+      assertEquals("5,7-10,15-17,18-20,30-50,60", ii.toStringOffsets());
+
+      //now add a complex merge
+      IntInterval i3 = new IntInterval(uc);
+      i3.setOffsets(10, 25);
+      i3.setPayload("pay3");
+
+      ii.addInterval(i3);
+
+      assertEquals("[5,6] [10,29] [50,59]", ii.toStringOffsetBracket());
+      assertEquals(3, ii.getSize());
+
+   }
+
+   public void testMergeComplex1Payloads() {
+      IntIntervals ii = new IntIntervals(uc);
+      ii.setPayLoadCheck(true);
+
+      IntInterval i57 = new IntInterval(uc);
+      i57.setOffsets(5, 7);
+      i57.setPayload("pay5");
+
+      ii.addInterval(i57);
+
+      IntInterval i1 = new IntInterval(uc);
+      i1.setOffsets(10, 15);
+      i1.setPayload("pay10");
+      ii.addInterval(i1);
+
+      IntInterval i2 = new IntInterval(uc);
+      i2.setOffsets(20, 30);
+      i2.setPayload("pay20");
+
+      ii.addInterval(i2);
+
+      assertEquals("5,7-10,15-20,30", ii.toStringOffsets());
+
+      IntInterval i50 = new IntInterval(uc);
+      i50.setOffsets(50, 60);
+      i50.setPayload("pay50");
+      ii.addInterval(i50);
+
       assertEquals("5,7-10,15-20,30-50,60", ii.toStringOffsets());
 
       IntInterval i17 = new IntInterval(uc);
@@ -721,52 +941,17 @@ public class TestIntIntervals extends TestCaseBentley {
       assertEquals(4, ii.getSize());
 
    }
-   
-   public void testMergeDoubleIntersectPayloads() {
-      IntIntervals ii = new IntIntervals(uc);
-      ii.setPayLoadCheck(true);
-      
-      IntInterval i57 = new IntInterval(uc);
-      i57.setOffsets(5, 7);
-      i57.setPayload("pay5");
-      
-      ii.addInterval(i57);
-      
-      IntInterval i1 = new IntInterval(uc);
-      i1.setOffsets(10, 15);
-      i1.setPayload("pay10");
-      ii.addInterval(i1);
 
-      IntInterval i2 = new IntInterval(uc);
-      i2.setOffsets(20, 30);
-      i2.setPayload("pay20");
-      ii.addInterval(i2);
-
-      
-      IntInterval i50 = new IntInterval(uc);
-      i50.setOffsets(50, 60);
-      i50.setPayload("pay50");
-      ii.addInterval(i50);
-      
-      IntInterval i3 = new IntInterval(uc);
-      i3.setOffsets(12, 24);
-      i3.setPayload("pay12");
-      ii.addInterval(i3);
-      
-      assertEquals("[5,6] [10,11] [12,23] [24,29] [50,59]", ii.toStringOffsetBracket());
-
-
-   }
    public void testMergeComplex2Payloads() {
       IntIntervals ii = new IntIntervals(uc);
       ii.setPayLoadCheck(true);
-      
+
       IntInterval i57 = new IntInterval(uc);
       i57.setOffsets(5, 7);
       i57.setPayload("pay5");
-      
+
       ii.addInterval(i57);
-      
+
       IntInterval i1 = new IntInterval(uc);
       i1.setOffsets(10, 15);
       i1.setPayload("pay10");
@@ -784,45 +969,41 @@ public class TestIntIntervals extends TestCaseBentley {
       i50.setOffsets(50, 60);
       i50.setPayload("pay50");
       ii.addInterval(i50);
-      
+
       assertEquals("5,7-10,15-20,30-50,60", ii.toStringOffsets());
 
       IntInterval i17 = new IntInterval(uc);
       i17.setOffsets(17, 18);
       i17.setPayload("payi");
       ii.addInterval(i17);
-      
-      
+
       IntInterval i18 = new IntInterval(uc);
       i18.setOffsets(18, 20);
       i18.setPayload("pay18");
       ii.addInterval(i18);
-      
-      
+
       assertEquals("[5,6] [10,14] [17,17] [18,19] [20,29] [50,59]", ii.toStringOffsetBracket());
 
-      
       //now add a complex merge
       IntInterval i3 = new IntInterval(uc);
       i3.setOffsets(11, 20);
       i3.setPayload("samepay");
       ii.addInterval(i3);
-      
+
       assertEquals("[5,6] [10,10] [11,29] [50,59]", ii.toStringOffsetBracket());
 
    }
-   /**
-    * Payloads changes everything
-    */
-   public void testMergeComplex1() {
+
+   public void testMergeDoubleIntersectPayloads() {
       IntIntervals ii = new IntIntervals(uc);
-      
+      ii.setPayLoadCheck(true);
+
       IntInterval i57 = new IntInterval(uc);
       i57.setOffsets(5, 7);
       i57.setPayload("pay5");
-      
+
       ii.addInterval(i57);
-      
+
       IntInterval i1 = new IntInterval(uc);
       i1.setOffsets(10, 15);
       i1.setPayload("pay10");
@@ -831,34 +1012,19 @@ public class TestIntIntervals extends TestCaseBentley {
       IntInterval i2 = new IntInterval(uc);
       i2.setOffsets(20, 30);
       i2.setPayload("pay20");
-
       ii.addInterval(i2);
-
-      assertEquals("5,7-10,15-20,30", ii.toStringOffsets());
 
       IntInterval i50 = new IntInterval(uc);
       i50.setOffsets(50, 60);
       i50.setPayload("pay50");
       ii.addInterval(i50);
-      
-      assertEquals("5,7-10,15-20,30-50,60", ii.toStringOffsets());
 
-      IntInterval i17 = new IntInterval(uc);
-      i17.setOffsets(17, 18);
-      i17.setPayload("payi");
-
-      ii.addInterval(i17);
-      assertEquals("5,7-10,15-17,18-20,30-50,60", ii.toStringOffsets());
-
-      //now add a complex merge
       IntInterval i3 = new IntInterval(uc);
-      i3.setOffsets(10, 25);
-      i3.setPayload("pay3");
-
+      i3.setOffsets(12, 24);
+      i3.setPayload("pay12");
       ii.addInterval(i3);
 
-      assertEquals("[5,6] [10,29] [50,59]", ii.toStringOffsetBracket());
-      assertEquals(3, ii.getSize());
+      assertEquals("[5,6] [10,11] [12,23] [24,29] [50,59]", ii.toStringOffsetBracket());
 
    }
 }
