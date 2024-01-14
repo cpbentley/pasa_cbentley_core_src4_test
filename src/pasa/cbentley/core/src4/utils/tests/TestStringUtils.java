@@ -17,7 +17,6 @@ public class TestStringUtils extends TestCaseBentley {
    private StringUtils su = new StringUtils(new UCtx());
 
    public TestStringUtils() {
-      setFlagHideSystemOutTrue();
    }
 
    public void setupAbstract() {
