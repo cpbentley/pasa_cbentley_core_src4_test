@@ -34,6 +34,20 @@ public class TestIntIntervals extends TestCaseBentley {
 
    }
 
+   public void testAddInsideRightComplementPayload() {
+      IntIntervals ii = new IntIntervals(uc);
+      ii.setPayLoadCheck(true);
+      
+      ii.addIntervalOffset(0, 16,"one");
+
+      assertEquals(1, ii.getSize());
+
+      ii.addIntervalOffset(0, 8,"two"); //15-20
+
+      assertEquals("[0,7] [8,15]", ii.toStringOffsetBracket());
+
+   }
+
    public void testAddAdjacentRight() {
       IntIntervals ii = new IntIntervals(uc);
       ii.addIntervalOffset(10, 15); //10-15
@@ -464,7 +478,7 @@ public class TestIntIntervals extends TestCaseBentley {
       assertEquals("two", ii.getInterval(2).getPayload());
       assertEquals("main", ii.getInterval(3).getPayload());
    }
-   
+
    public void testSameLeftPayloadDifferent() {
       IntIntervals ii = new IntIntervals(uc);
       ii.setPayLoadCheck(true);
@@ -511,7 +525,6 @@ public class TestIntIntervals extends TestCaseBentley {
       assertEquals("two", ii.getInterval(2).getPayload());
    }
 
-   
    public void testAdjacentLeftOverRightPayloadSameLeft() {
       IntIntervals ii = new IntIntervals(uc);
       ii.setPayLoadCheck(true);

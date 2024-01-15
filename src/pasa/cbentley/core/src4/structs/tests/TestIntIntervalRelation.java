@@ -164,8 +164,7 @@ public class TestIntIntervalRelation extends TestCaseBentley {
 
       assertEquals(null, iir.getIntervalIntersect());
 
-      assertEquals(5, iir.getIntersectComplementLeft().getOffset()); //interval between
-      assertEquals(10, iir.getIntersectComplementLeft().getLen()); //interval between
+      assertEquals(null, iir.getIntersectComplementLeft()); //interval between
       assertEquals(null, iir.getIntersectComplementRight());
    }
 
@@ -275,7 +274,9 @@ public class TestIntIntervalRelation extends TestCaseBentley {
       assertEquals(10, iir.getIntersectComplementLeft().getOffset());
       assertEquals(15, iir.getIntersectComplementLeft().getOffsetEnd());
 
-      assertEquals(null, iir.getIntersectComplementRight());
+      assertEquals(20, iir.getIntersectComplementRight().getOffset());
+      assertEquals(30, iir.getIntersectComplementRight().getOffsetEnd());
+
 
       //exchange positions
       two.setOffsets(10, 20);
@@ -299,7 +300,9 @@ public class TestIntIntervalRelation extends TestCaseBentley {
       assertEquals(10, iir.getIntersectComplementLeft().getOffset());
       assertEquals(15, iir.getIntersectComplementLeft().getOffsetEnd());
 
-      assertEquals(null, iir.getIntersectComplementRight());
+      assertEquals(20, iir.getIntersectComplementRight().getOffset());
+      assertEquals(30, iir.getIntersectComplementRight().getOffsetEnd());
+
    }
 
    public void test04IntersectContainedLeft() {
@@ -329,6 +332,51 @@ public class TestIntIntervalRelation extends TestCaseBentley {
 
       assertEquals(15, iir.getIntersectComplementRight().getOffset());
       assertEquals(20, iir.getIntersectComplementRight().getOffsetEnd());
+
+   }
+   
+   public void test11RightComplement() {
+      IntInterval ZeroTo16 = new IntInterval(uc);
+      IntInterval ZeroTo8 = new IntInterval(uc);
+
+      ZeroTo16.setOffsets(0, 16);
+      ZeroTo8.setOffsets(0, 8);
+      
+      IntIntervalRelation iir = ZeroTo16.getRelation(ZeroTo8);
+      assertEquals(false, iir.isOneFirst());
+      assertEquals(true, iir.isOneLast());
+      assertEquals(false, iir.isTwoFirst());
+      assertEquals(false, iir.isTwoLast());
+      assertEquals(false, iir.isSameLength());
+      assertEquals(true, iir.isSameOffsetStart());
+     
+      assertEquals(0, iir.getIntervalIntersect().getOffset());
+      assertEquals(7, iir.getIntervalIntersect().getOffsetEndInside());
+      assertEquals(8, iir.getIntervalIntersect().getOffsetEnd());
+      assertEquals(8, iir.getIntervalIntersect().getLen());
+
+      assertEquals(null, iir.getIntersectComplementLeft());
+      assertEquals(8, iir.getIntersectComplementRight().getOffset());
+      assertEquals(8, iir.getIntersectComplementRight().getLen());
+      
+      iir = ZeroTo8.getRelation(ZeroTo16);
+      
+      assertEquals(false, iir.isOneFirst());
+      assertEquals(false, iir.isOneLast());
+      assertEquals(false, iir.isTwoFirst());
+      assertEquals(true, iir.isTwoLast());
+      
+      assertEquals(false, iir.isSameLength());
+      assertEquals(true, iir.isSameOffsetStart());
+     
+      assertEquals(0, iir.getIntervalIntersect().getOffset());
+      assertEquals(7, iir.getIntervalIntersect().getOffsetEndInside());
+      assertEquals(8, iir.getIntervalIntersect().getOffsetEnd());
+      assertEquals(8, iir.getIntervalIntersect().getLen());
+
+      assertEquals(null, iir.getIntersectComplementLeft());
+      assertEquals(8, iir.getIntersectComplementRight().getOffset());
+      assertEquals(8, iir.getIntersectComplementRight().getLen());
 
    }
 
