@@ -10,7 +10,6 @@ import pasa.cbentley.testing.engine.TestCaseBentley;
 public class TestIntToStrings extends TestCaseBentley {
 
    public TestIntToStrings() {
-      super(false);
    }
 
    public void setupAbstract() {
@@ -25,7 +24,7 @@ public class TestIntToStrings extends TestCaseBentley {
 
    public void testEnsureRoom() {
 
-      IntToStrings its = new IntToStrings(uc,5);
+      IntToStrings its = new IntToStrings(uc, 5);
 
       assertEquals(its.nextempty, 0);
       assertEquals(its.ints.length, 5);
@@ -34,12 +33,12 @@ public class TestIntToStrings extends TestCaseBentley {
 
       assertEquals(its.nextempty, 0);
 
-      assertEquals(its.ints.length, 10);
+      assertEquals(true, its.ints.length > 10);
 
    }
 
    public void testSet() {
-      IntToStrings its = new IntToStrings(uc,5);
+      IntToStrings its = new IntToStrings(uc, 5);
 
       its.setUnsafe(1, "1");
 

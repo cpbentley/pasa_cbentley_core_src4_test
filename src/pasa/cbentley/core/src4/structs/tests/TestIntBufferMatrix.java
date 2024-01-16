@@ -11,7 +11,6 @@ import pasa.cbentley.testing.engine.TestCaseBentley;
 public class TestIntBufferMatrix extends TestCaseBentley {
 
    public TestIntBufferMatrix() {
-      super(false);
    }
 
    public void setupAbstract() {

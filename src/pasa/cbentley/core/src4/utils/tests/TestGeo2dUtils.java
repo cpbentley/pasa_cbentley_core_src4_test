@@ -13,7 +13,6 @@ public class TestGeo2dUtils extends TestCaseBentley {
    Geo2dUtils gu = new Geo2dUtils(uc);
 
    public TestGeo2dUtils() {
-      super(true);
    }
 
    public void testHoleOne2() {

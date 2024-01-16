@@ -17,7 +17,6 @@ public class TestIntUtils extends TestCaseBentley {
    private IntUtils iu;
 
    public TestIntUtils() {
-      super(true);
    }
 
    public void setupAbstract() {

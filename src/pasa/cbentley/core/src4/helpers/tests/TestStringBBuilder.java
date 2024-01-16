@@ -10,11 +10,9 @@ import pasa.cbentley.testing.engine.TestCaseBentley;
 public class TestStringBBuilder extends TestCaseBentley {
 
    public TestStringBBuilder() {
-      super(true);
    }
 
    public void setupAbstract() {
-      // TODO Auto-generated method stub
 
    }
 

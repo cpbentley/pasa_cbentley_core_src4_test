@@ -10,7 +10,6 @@ import pasa.cbentley.testing.engine.TestCaseBentley;
 public class TestIntToInts extends TestCaseBentley {
 
    public TestIntToInts() {
-      super(false);
    }
 
    public void testIntToInts_Add() {

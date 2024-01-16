@@ -10,7 +10,6 @@ import pasa.cbentley.testing.engine.TestCaseBentley;
 public class TestCircularObjects extends TestCaseBentley {
 
    public TestCircularObjects() {
-      super(true);
    }
    
    public void testBasic() {

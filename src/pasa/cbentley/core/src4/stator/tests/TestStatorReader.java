@@ -20,7 +20,7 @@ public class TestStatorReader extends TestCaseBentley {
       
       StatorReader reader = new StatorReader(uc);
       
-      TestStatorableFactory factory = new TestStatorableFactory(tc);
+      StatorableFactoryForTests factory = new StatorableFactoryForTests(tc);
       reader.addFactory(factory);
       
       

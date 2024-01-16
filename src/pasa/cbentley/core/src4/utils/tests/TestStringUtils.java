@@ -14,13 +14,13 @@ import pasa.cbentley.testing.engine.TestCaseBentley;
 
 public class TestStringUtils extends TestCaseBentley {
 
-   private StringUtils su = new StringUtils(new UCtx());
+   private StringUtils su;
 
    public TestStringUtils() {
    }
 
    public void setupAbstract() {
-
+      su = new StringUtils(new UCtx());
    }
 
    public void testIndexOf() {

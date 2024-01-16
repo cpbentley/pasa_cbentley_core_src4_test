@@ -11,7 +11,6 @@ import pasa.cbentley.testing.engine.TestCaseBentley;
 public class TestIntBuffer extends TestCaseBentley {
 
    public TestIntBuffer() {
-      super(false);
    }
 
    public void setupAbstract() {

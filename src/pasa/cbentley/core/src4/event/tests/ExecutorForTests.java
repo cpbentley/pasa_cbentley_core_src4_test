@@ -11,11 +11,11 @@ import pasa.cbentley.core.src4.interfaces.IExecutor;
 import pasa.cbentley.core.src4.logging.Dctx;
 import pasa.cbentley.core.src4.logging.IDLog;
 
-public class TestExecutor implements IExecutor {
+public class ExecutorForTests implements IExecutor {
 
    protected final UCtx uc;
 
-   public TestExecutor(UCtx uc) {
+   public ExecutorForTests(UCtx uc) {
       this.uc = uc;
       stackModes = new Stack<Integer>();
    }

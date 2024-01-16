@@ -12,7 +12,6 @@ import pasa.cbentley.testing.engine.TestCaseBentley;
 public class TestShortUtils extends TestCaseBentley {
 
    public TestShortUtils() {
-      super(true);
    }
 
    public void setupAbstract() {

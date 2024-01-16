@@ -10,13 +10,13 @@ import pasa.cbentley.core.src4.stator.StatorReader;
 import pasa.cbentley.core.src4.stator.StatorWriter;
 import pasa.cbentley.testing.ctx.TestCtx;
 
-public class TestStatorable1 extends TestStatorableAbstract {
+public class Statorable1ForTests extends StatorableAbstractForTests {
 
    private String stringColor;
 
    private int    intColor;
 
-   public TestStatorable1(TestCtx tc) {
+   public Statorable1ForTests(TestCtx tc) {
       super(tc);
 
    }

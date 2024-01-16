@@ -14,7 +14,6 @@ public class TestArrayUtils extends TestCaseBentley {
    private StringUtils su = new StringUtils(uc);
 
    public TestArrayUtils() {
-      super(true);
    }
 
    public void setupAbstract() {

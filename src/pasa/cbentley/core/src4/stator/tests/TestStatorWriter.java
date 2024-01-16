@@ -45,9 +45,9 @@ public class TestStatorWriter extends TestCaseBentley {
 
       assertEquals(null, sw.getData());
       
-      TestStatorable2 ts2 = new TestStatorable2(tc);
+      Statorable2ForTests ts2 = new Statorable2ForTests(tc);
       ts2.setName("ts2");
-      TestStatorable1 ts1 = new TestStatorable1(tc);
+      Statorable1ForTests ts1 = new Statorable1ForTests(tc);
       ts1.setIntColor(464);
       ts1.setStringColor("blue");
       
@@ -63,12 +63,12 @@ public class TestStatorWriter extends TestCaseBentley {
       assertEquals(data.length, 52);
       
       StatorReader reader = new StatorReader(uc);
-      reader.addFactory(new TestStatorableFactory(tc));
+      reader.addFactory(new StatorableFactoryForTests(tc));
       reader.importFrom(data);
       
       assertEquals(2, reader.getNumObjects());
       
-      TestStatorable2 ts2Read = (TestStatorable2) reader.createObject(TestStatorable2.class);
+      Statorable2ForTests ts2Read = (Statorable2ForTests) reader.createObject(Statorable2ForTests.class);
       
       assertNotNull(ts2Read);
       assertNotNull(ts2Read.getName());

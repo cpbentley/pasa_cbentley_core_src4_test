@@ -15,7 +15,6 @@ public class TestIOUtils extends TestCaseBentley {
    private StringUtils su;
 
    public TestIOUtils() {
-      super(true);
    }
 
    public void setupAbstract() {

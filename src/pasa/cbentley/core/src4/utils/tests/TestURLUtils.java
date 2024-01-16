@@ -10,11 +10,15 @@ import pasa.cbentley.testing.engine.TestCaseBentley;
 
 public class TestURLUtils extends TestCaseBentley {
 
+   URLUtils uu;
+
    public TestURLUtils() {
-      super(true);
+      super();
    }
 
-   URLUtils uu = new URLUtils(new UCtx());
+   public void setupAbstract() {
+      uu = new URLUtils(new UCtx());
+   }
 
    public void testGetURLRootFrom() throws Exception {
 
@@ -23,10 +27,6 @@ public class TestURLUtils extends TestCaseBentley {
       assertEquals("http://www.something.com/images/", uu.getURLRootFrom("http://www.something.com/images/01"));
       assertEquals("http://www.something.com/images/", uu.getURLRootFrom("http://www.something.com/images/0"));
       assertEquals("http://www.something.com/images/", uu.getURLRootFrom("http://www.something.com/images/"));
-
-   }
-
-   public void setupAbstract() {
 
    }
 

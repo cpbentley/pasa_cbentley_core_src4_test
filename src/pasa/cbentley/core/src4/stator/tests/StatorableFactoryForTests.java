@@ -8,11 +8,11 @@ import pasa.cbentley.core.src4.stator.IStatorFactory;
 import pasa.cbentley.core.src4.stator.StatorReader;
 import pasa.cbentley.testing.ctx.TestCtx;
 
-public class TestStatorableFactory implements IStatorFactory {
+public class StatorableFactoryForTests implements IStatorFactory {
 
    protected final TestCtx tc;
 
-   public TestStatorableFactory(TestCtx tc) {
+   public StatorableFactoryForTests(TestCtx tc) {
       this.tc = tc;
 
    }
@@ -21,12 +21,12 @@ public class TestStatorableFactory implements IStatorFactory {
 
       int classID = state.getDataReader().readInt();
       if (classID == 0) {
-         TestStatorable1 ts1 = new TestStatorable1(tc);
+         Statorable1ForTests ts1 = new Statorable1ForTests(tc);
          ts1.stateReadFrom(state);
          return ts1;
       }
       if (classID == 1) {
-         TestStatorable2 ts2 = new TestStatorable2(tc);
+         Statorable2ForTests ts2 = new Statorable2ForTests(tc);
          ts2.stateReadFrom(state);
          return ts2;
       }
@@ -34,13 +34,13 @@ public class TestStatorableFactory implements IStatorFactory {
    }
 
    public Object createObject(StatorReader state, Class type) {
-      if (type == TestStatorable1.class) {
-         TestStatorable1 ts1 = new TestStatorable1(tc);
+      if (type == Statorable1ForTests.class) {
+         Statorable1ForTests ts1 = new Statorable1ForTests(tc);
          ts1.stateReadFrom(state);
          return ts1;
       }
-      if (type == TestStatorable2.class) {
-         TestStatorable2 ts2 = new TestStatorable2(tc);
+      if (type == Statorable2ForTests.class) {
+         Statorable2ForTests ts2 = new Statorable2ForTests(tc);
          ts2.stateReadFrom(state);
          return ts2;
       }
@@ -48,18 +48,18 @@ public class TestStatorableFactory implements IStatorFactory {
    }
 
    public boolean isTypeSupported(Class cl) {
-      if (cl == TestStatorable1.class || cl == TestStatorable2.class) {
+      if (cl == Statorable1ForTests.class || cl == Statorable2ForTests.class) {
          return true;
       }
       return false;
    }
 
    public Object[] createArray(Class cl, int size) {
-      if (cl == TestStatorable1.class) {
-         return new TestStatorable1[size];
+      if (cl == Statorable1ForTests.class) {
+         return new Statorable1ForTests[size];
       }
-      if (cl == TestStatorable2.class) {
-         return new TestStatorable2[size];
+      if (cl == Statorable2ForTests.class) {
+         return new Statorable2ForTests[size];
       }
       return null;
    }

@@ -11,7 +11,6 @@ import pasa.cbentley.testing.engine.TestCaseBentley;
 public class TestIntSorter extends TestCaseBentley {
 
    public TestIntSorter() {
-      super(false);
    }
 
    public void setupAbstract() {

@@ -1,5 +1,7 @@
-package pasa.cbentley.core.src4.strings;
+package pasa.cbentley.core.src4.strings.tests;
 
+import pasa.cbentley.core.src4.helpers.StringBBuilder;
+import pasa.cbentley.core.src4.strings.CharMapper;
 import pasa.cbentley.testing.engine.TestCaseBentley;
 
 public class TestCharMapper extends TestCaseBentley {
@@ -251,6 +253,10 @@ public class TestCharMapper extends TestCaseBentley {
 
       assertEquals("st", cm.getStringSrc(25,2));
       assertEquals("str.", cm.getStringSrc(25,3)); //add one and take the hidden char
+      
+      StringBBuilder sb = new StringBBuilder(uc);
+      cm.appendStringSrc(sb, 0, 10);
+      assertEquals("I want.\n Re", sb.toString());
 
    }
 

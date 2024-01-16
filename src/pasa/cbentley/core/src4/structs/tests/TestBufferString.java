@@ -10,7 +10,6 @@ import pasa.cbentley.testing.engine.TestCaseBentley;
 public class TestBufferString extends TestCaseBentley {
 
    public TestBufferString() {
-      super(false);
    }
 
    public void setupAbstract() {
@@ -44,12 +43,20 @@ public class TestBufferString extends TestCaseBentley {
       
       BufferString bsCloned = bs.cloneMe();
       
+      assertEquals("one", bsCloned.getFirst());
+      assertEquals("one", bsCloned.getLast());
+      
+      assertEquals(1, bsCloned.getSize()); 
+      
       assertEquals(0,bs.removeAll("two"));
+      assertEquals(1, bsCloned.getSize()); 
+      
       assertEquals(1,bs.removeAll("one"));
+      
       assertEquals(0, bs.getSize());
       
-      assertEquals("one", bs.getLast());
-      assertEquals("one", bs.getLast());
+      assertEquals(null, bs.getFirst());
+      assertEquals(null, bs.getLast());
       
       bsCloned.getLast();
       

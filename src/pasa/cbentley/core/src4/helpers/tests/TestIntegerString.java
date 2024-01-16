@@ -12,7 +12,6 @@ import pasa.cbentley.testing.engine.TestCaseBentley;
 public class TestIntegerString extends TestCaseBentley {
 
    public TestIntegerString() {
-      super(true);
    }
 
    public void setupAbstract() {

@@ -11,7 +11,6 @@ import pasa.cbentley.testing.engine.TestCaseBentley;
 public class TestBigDecimalUtils extends TestCaseBentley {
 
    public TestBigDecimalUtils() {
-      super(true);
    }
 
    /**

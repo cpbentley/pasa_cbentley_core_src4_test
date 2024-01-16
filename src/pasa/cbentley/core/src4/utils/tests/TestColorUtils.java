@@ -14,7 +14,6 @@ public class TestColorUtils extends TestCaseBentley {
    ColorUtils uu = new ColorUtils(new UCtx());
 
    public TestColorUtils() {
-      super(true);
    }
 
    @Test

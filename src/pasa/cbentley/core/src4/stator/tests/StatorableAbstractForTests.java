@@ -12,11 +12,11 @@ import pasa.cbentley.core.src4.stator.StatorReader;
 import pasa.cbentley.core.src4.stator.StatorWriter;
 import pasa.cbentley.testing.ctx.TestCtx;
 
-public abstract class TestStatorableAbstract implements IStatorable {
+public abstract class StatorableAbstractForTests implements IStatorable {
 
    protected final TestCtx tc;
 
-   public TestStatorableAbstract(TestCtx tc) {
+   public StatorableAbstractForTests(TestCtx tc) {
       this.tc = tc;
       
    }

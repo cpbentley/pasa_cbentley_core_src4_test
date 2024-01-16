@@ -10,7 +10,6 @@ import pasa.cbentley.testing.engine.TestCaseBentley;
 public class TestIntToObjects extends TestCaseBentley {
 
    public TestIntToObjects() {
-      super(false);
    }
 
    public void setupAbstract() {

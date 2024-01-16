@@ -10,13 +10,13 @@ import pasa.cbentley.core.src4.stator.StatorReader;
 import pasa.cbentley.core.src4.stator.StatorWriter;
 import pasa.cbentley.testing.ctx.TestCtx;
 
-public class TestStatorable2 extends TestStatorableAbstract {
+public class Statorable2ForTests extends StatorableAbstractForTests {
 
    private String          name;
 
-   private TestStatorable1 state1;
+   private Statorable1ForTests state1;
 
-   public TestStatorable2(TestCtx tc) {
+   public Statorable2ForTests(TestCtx tc) {
       super(tc);
 
    }
@@ -25,7 +25,7 @@ public class TestStatorable2 extends TestStatorableAbstract {
       return name;
    }
 
-   public TestStatorable1 getState1() {
+   public Statorable1ForTests getState1() {
       return state1;
    }
 
@@ -33,13 +33,13 @@ public class TestStatorable2 extends TestStatorableAbstract {
       this.name = name;
    }
 
-   public void setState1(TestStatorable1 state1) {
+   public void setState1(Statorable1ForTests state1) {
       this.state1 = state1;
    }
 
    public void stateReadFrom(StatorReader state) {
       name = state.getDataReader().readString();
-      state1 = (TestStatorable1) state.createObject(TestStatorable1.class, state1);
+      state1 = (Statorable1ForTests) state.createObject(Statorable1ForTests.class, state1);
    }
 
    public void stateWriteTo(StatorWriter state) {

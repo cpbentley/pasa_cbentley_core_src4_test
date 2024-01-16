@@ -14,7 +14,6 @@ import pasa.cbentley.testing.engine.TestCaseBentley;
 public class TestLongUtils extends TestCaseBentley {
 
    public TestLongUtils() {
-      super(true);
    }
 
    @Test

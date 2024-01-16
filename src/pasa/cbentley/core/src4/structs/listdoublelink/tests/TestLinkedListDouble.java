@@ -13,7 +13,6 @@ import pasa.cbentley.testing.engine.TestCaseBentley;
 public class TestLinkedListDouble extends TestCaseBentley {
 
    public TestLinkedListDouble() {
-      super(false);
    }
 
    public void testRemoveObjectRef() {

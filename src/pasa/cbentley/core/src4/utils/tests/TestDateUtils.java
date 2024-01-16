@@ -14,7 +14,6 @@ public class TestDateUtils extends TestCaseBentley {
    private DateUtils du = new DateUtils(uc);
 
    public TestDateUtils() {
-      super(true);
    }
 
    public void testDeci() {

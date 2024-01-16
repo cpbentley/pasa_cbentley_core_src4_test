@@ -11,7 +11,6 @@ import pasa.cbentley.testing.engine.TestCaseBentley;
 public class TestBADataIS extends TestCaseBentley {
 
    public TestBADataIS() {
-      super(false);
    }
 
    public void setupAbstract() {

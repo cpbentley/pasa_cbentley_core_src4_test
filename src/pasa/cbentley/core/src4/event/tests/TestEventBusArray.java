@@ -205,7 +205,7 @@ public class TestEventBusArray extends TestCaseBentley implements ITechThread {
       
       CounterInt counter = new CounterInt(uc, 0);
       
-      TestExecutor test = new TestExecutor(uc);
+      ExecutorForTests test = new ExecutorForTests(uc);
       
       bus.setExecutor(test);
       

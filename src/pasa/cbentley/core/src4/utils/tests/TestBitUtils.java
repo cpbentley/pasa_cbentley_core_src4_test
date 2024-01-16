@@ -17,7 +17,6 @@ public class TestBitUtils extends TestCaseBentley {
    private BitUtils bu;
 
    public TestBitUtils() {
-      super(true);
    }
 
    public void setupAbstract() {

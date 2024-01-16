@@ -10,7 +10,7 @@ import pasa.cbentley.testing.engine.TestCaseBentley;
  * @author Charles Bentley
  *
  */
-public abstract class TestLString extends TestCaseBentley {
+public class TestLString extends TestCaseBentley {
 
    public static final int    KEY_FOR_HELLO = 2;
 
@@ -28,6 +28,8 @@ public abstract class TestLString extends TestCaseBentley {
 
       LString str = new LString(producer, key);
 
+      str.setPrefix("en");
+      assertEquals("en", str.getPrefix());
    }
 
 }
