@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import pasa.cbentley.core.src4.ctx.UCtx;
 import pasa.cbentley.core.src4.utils.ColorUtils;
+import pasa.cbentley.core.src4.utils.interfaces.IColorsWeb;
 import pasa.cbentley.testing.engine.TestCaseBentley;
 
 public class TestColorUtils extends TestCaseBentley {
@@ -18,18 +19,18 @@ public class TestColorUtils extends TestCaseBentley {
 
    @Test
    public void testGetBlue() throws Exception {
-      assertEquals(0, ColorUtils.getBlue(ColorUtils.WEB_olive));
-      assertEquals(255, ColorUtils.getBlue(ColorUtils.WEB_azure));
+      assertEquals(0, ColorUtils.getBlue(IColorsWeb.WEB_olive));
+      assertEquals(255, ColorUtils.getBlue(IColorsWeb.WEB_azure));
    }
 
    @Test
    public void testGetGreen() throws Exception {
-      assertEquals(128, ColorUtils.getGreen(ColorUtils.WEB_olive));
+      assertEquals(128, ColorUtils.getGreen(IColorsWeb.WEB_olive));
    }
 
    @Test
    public void testGetRed() throws Exception {
-      assertEquals(128, ColorUtils.getRed(ColorUtils.WEB_olive));
+      assertEquals(128, ColorUtils.getRed(IColorsWeb.WEB_olive));
    }
    
    public void testGetHSL() {
