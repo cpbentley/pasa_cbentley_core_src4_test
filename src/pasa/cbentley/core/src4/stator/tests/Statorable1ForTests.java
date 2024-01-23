@@ -4,47 +4,53 @@
  */
 package pasa.cbentley.core.src4.stator.tests;
 
-import pasa.cbentley.core.src4.ctx.UCtx;
+import pasa.cbentley.core.src4.ctx.ICtx;
 import pasa.cbentley.core.src4.logging.Dctx;
 import pasa.cbentley.core.src4.stator.StatorReader;
 import pasa.cbentley.core.src4.stator.StatorWriter;
-import pasa.cbentley.testing.ctx.TestCtx;
 
 public class Statorable1ForTests extends StatorableAbstractForTests {
 
-   private String stringColor;
-
    private int    intColor;
 
-   public Statorable1ForTests(TestCtx tc) {
+   private String stringColor;
+
+   public Statorable1ForTests(TestStatorCtx tc) {
       super(tc);
 
-   }
-
-   public void stateWriteTo(StatorWriter state) {
-      state.getDataWriter().writeString(getStringColor());
-      state.getDataWriter().writeInt(getIntColor());
-   }
-
-   public void stateReadFrom(StatorReader state) {
-      setStringColor(state.getDataReader().readString());
-      setIntColor(state.getDataReader().readInt());
    }
 
    public int getIntColor() {
       return intColor;
    }
+   public ICtx getCtxOwner() {
+      return tsc;
+   }
 
-   public void setIntColor(int intColor) {
-      this.intColor = intColor;
+   public int getStatorableClassID() {
+      return ITechStatorableTest.CLASSID_Statorable1ForTests;
    }
 
    public String getStringColor() {
       return stringColor;
    }
 
+   public void setIntColor(int intColor) {
+      this.intColor = intColor;
+   }
+
    public void setStringColor(String stringColor) {
       this.stringColor = stringColor;
+   }
+
+   public void stateReadFrom(StatorReader state) {
+      setStringColor(state.getReader().readString());
+      setIntColor(state.getReader().readInt());
+   }
+
+   public void stateWriteTo(StatorWriter state) {
+      state.getWriter().writeString(getStringColor());
+      state.getWriter().writeInt(getIntColor());
    }
 
    //#mdebug
@@ -54,18 +60,17 @@ public class Statorable1ForTests extends StatorableAbstractForTests {
       super.toString(dc.sup());
    }
 
-   private void toStringPrivate(Dctx dc) {
-      dc.appendVarWithSpace("stringColor", stringColor);
-      dc.appendVarWithSpace("intColor", intColor);
-   }
-
    public void toString1Line(Dctx dc) {
       dc.root1Line(this, "TestStatorable1");
       toStringPrivate(dc);
       super.toString1Line(dc.sup1Line());
    }
 
+   private void toStringPrivate(Dctx dc) {
+      dc.appendVarWithSpace("stringColor", stringColor);
+      dc.appendVarWithSpace("intColor", intColor);
+   }
+
    //#enddebug
-   
 
 }

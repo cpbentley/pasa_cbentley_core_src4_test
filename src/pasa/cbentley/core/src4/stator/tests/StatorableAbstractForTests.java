@@ -14,11 +14,14 @@ import pasa.cbentley.testing.ctx.TestCtx;
 
 public abstract class StatorableAbstractForTests implements IStatorable {
 
-   protected final TestCtx tc;
+   protected final TestCtx       tc;
 
-   public StatorableAbstractForTests(TestCtx tc) {
-      this.tc = tc;
-      
+   protected final TestStatorCtx tsc;
+
+   public StatorableAbstractForTests(TestStatorCtx tsc) {
+      this.tsc = tsc;
+      this.tc = tsc.getTC();
+
    }
 
    //#mdebug
@@ -53,6 +56,5 @@ public abstract class StatorableAbstractForTests implements IStatorable {
    }
 
    //#enddebug
-   
 
 }

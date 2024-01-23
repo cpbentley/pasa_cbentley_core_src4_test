@@ -45,6 +45,18 @@ public class TestBufferObject extends TestCaseBentley {
       assertEquals("1", bo.get(1));
    }
 
+   public void testAdd1() {
+      
+      BufferObject buffer = new BufferObject(uc, 1);
+      
+      buffer.add("1");
+      
+      //#debug
+      toDLog().pTest("msg", buffer, TestBufferObject.class, "testAdd1", LVL_05_FINE, false);
+      
+      assertEquals(1, buffer.getSize());
+      
+   }
    public void testInsertAt() {
 
       BufferObject bo = new BufferObject(uc, 5);

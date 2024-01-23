@@ -4,76 +4,134 @@
  */
 package pasa.cbentley.core.src4.stator.tests;
 
+import pasa.cbentley.core.src4.interfaces.IPrefsWriter;
+import pasa.cbentley.core.src4.io.BADataOS;
+import pasa.cbentley.core.src4.stator.ITechStator;
+import pasa.cbentley.core.src4.stator.Stator;
 import pasa.cbentley.core.src4.stator.StatorReader;
 import pasa.cbentley.core.src4.stator.StatorWriter;
 import pasa.cbentley.testing.engine.TestCaseBentley;
 
-public class TestStatorWriter extends TestCaseBentley {
+public class TestStatorWriter extends TestCaseStator {
 
-   public void setupAbstract() {
-      //what about the logging ?
-   }
 
    public void testWriterEmpty() {
 
-      StatorWriter sw = new StatorWriter(uc);
-      assertEquals(null, sw.getData());
-      byte[] data = sw.serialize();
-      
-      
-   }
-   
-   
-   public void testWriterOnlyKeys() {
-      StatorWriter sw = new StatorWriter(uc);
+      StatorWriter writer = new StatorWriter(stator, TYPE_0_MASTER);
 
-      sw.getKeyValuePairs().put("color", "black");
-      sw.getKeyValuePairs().putInt("saturation", 100);
-      
-      byte[] data = sw.serialize();
-      
-      StatorReader reader = new StatorReader(uc);
-      reader.importFrom(data);
-      
-      assertEquals("black", reader.getKeyValuePairs().get("color", ""));
-      assertEquals(100, reader.getKeyValuePairs().getInt("saturation", 0));
+      BADataOS dataWriter = writer.getWriter();
+
+      IPrefsWriter keyValuePairs = writer.getPrefs();
+
+      assertEquals(0, writer.getNumWrittenObject());
+      assertEquals(TYPE_0_MASTER, writer.getType());
+
+      byte[] data = writer.serialize();
+
    }
+
+   public void testIsContinue() {
+
+      StatorWriter writer = stator.getWriter(TYPE_0_MASTER);
+
+      Statorable2ForTests red = new Statorable2ForTests(tsc);
+      red.setName("red");
+
+      Statorable1ForTests blue = new Statorable1ForTests(tsc);
+      blue.setStringColor("blue");
+
+      writer.writerToStatorable(blue);
+      writer.writerToStatorable(red);
+
+      //write it again.. but it won't affect the stator.. just writing the object ID
+      writer.writerToStatorable(blue);
+      
+      assertEquals(2, writer.getNumWrittenObject());
+
+      byte[] data = stator.serializeAll();
+      Stator statorFutur = createNewStator();
+      statorFutur.importFrom(data);
+
+      StatorReader reader = statorFutur.getReader(TYPE_0_MASTER);
+
+      Statorable1ForTests blueFuture = new Statorable1ForTests(tsc);
+      
+      reader.readerToStatorable(blueFuture);
+      
+
+      assertEquals("blue", blueFuture.getStringColor());
+
+      Statorable2ForTests redFuture = new Statorable2ForTests(tsc);
+      reader.readerToStatorable(redFuture);
+
+      assertEquals("red", redFuture.getName());
+
+      assertEquals(true, reader.hasMore());
+
+      reader.readerToStatorable(blueFuture);
+
+      assertEquals(false, reader.hasMore());
+   }
+
+   public void testWriteTwice() {
+
+      StatorWriter writer = stator.getWriter(TYPE_0_MASTER);
+
+      Statorable1ForTests blue = new Statorable1ForTests(tsc);
+      blue.setStringColor("blue");
+
+      writer.writerToStatorable(blue);
+      writer.writerToStatorable(blue);
+      
+      assertEquals(1, writer.getNumWrittenObject());
+
+      byte[] data = stator.serializeAll();
+      Stator statorFutur = createNewStator();
+      statorFutur.importFrom(data);
+
+      StatorReader reader = statorFutur.getReader(TYPE_0_MASTER);
+
+      Statorable1ForTests blueFuture = new Statorable1ForTests(tsc);
+      
+      reader.readerToStatorable(blueFuture);
+      assertEquals("blue", blueFuture.getStringColor());
+      assertEquals(true, reader.hasMore());
+      reader.readerToStatorable(blueFuture);
+      assertEquals(false, reader.hasMore());
+   }
+
    
    public void testWriter() {
 
-      StatorWriter sw = new StatorWriter(uc);
+      StatorWriter writer = stator.getWriter(TYPE_0_MASTER);
 
-      assertEquals(null, sw.getData());
-      
-      Statorable2ForTests ts2 = new Statorable2ForTests(tc);
-      ts2.setName("ts2");
-      Statorable1ForTests ts1 = new Statorable1ForTests(tc);
+      Statorable2ForTests ts2 = new Statorable2ForTests(tsc);
+      ts2.setName("red");
+
+      Statorable1ForTests ts1 = new Statorable1ForTests(tsc);
       ts1.setIntColor(464);
       ts1.setStringColor("blue");
-      
+
       ts2.setState1(ts1);
-      
-      sw.stateWriteOf(ts2);
-      
-      
-      assertEquals(2, sw.getNumWrittenObject());
-      
-      byte[] data = sw.serialize();
-      
-      assertEquals(data.length, 52);
-      
-      StatorReader reader = new StatorReader(uc);
-      reader.addFactory(new StatorableFactoryForTests(tc));
-      reader.importFrom(data);
-      
+
+      writer.writerToStatorable(ts2);
+
+      assertEquals(2, writer.getNumWrittenObject());
+
+      byte[] data = stator.serializeAll();
+      Stator statorFutur = createNewStator();
+      statorFutur.importFrom(data);
+
+      StatorReader reader = statorFutur.getReader(TYPE_0_MASTER);
+
       assertEquals(2, reader.getNumObjects());
-      
-      Statorable2ForTests ts2Read = (Statorable2ForTests) reader.createObject(Statorable2ForTests.class);
-      
+
+      Statorable2ForTests ts2Read = (Statorable2ForTests) reader.readObject(tsc);
+
       assertNotNull(ts2Read);
       assertNotNull(ts2Read.getName());
       assertNotNull(ts2Read.getState1());
-      
+
       assertEquals(ts2.getName(), ts2Read.getName());
       assertNotNull(ts2Read.getState1());
       assertEquals(ts1.getIntColor(), ts2Read.getState1().getIntColor());

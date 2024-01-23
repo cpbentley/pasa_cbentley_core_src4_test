@@ -14,6 +14,7 @@ public class SuiteCoreSrc4Stator extends TestSuite {
       TestSuite suite = new TestSuite("Tests for Stator");
       suite.addTestSuite(TestStatorReader.class);
       suite.addTestSuite(TestStatorWriter.class);
+      suite.addTestSuite(TestStator.class);
 
       return suite;
    }
