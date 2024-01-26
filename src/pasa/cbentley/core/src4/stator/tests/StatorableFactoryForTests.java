@@ -8,6 +8,7 @@ import javax.swing.text.LabelView;
 
 import pasa.cbentley.core.src4.ctx.ICtx;
 import pasa.cbentley.core.src4.stator.IStatorFactory;
+import pasa.cbentley.core.src4.stator.IStatorable;
 import pasa.cbentley.core.src4.stator.StatorReader;
 import pasa.cbentley.testing.ctx.TestCtx;
 
@@ -28,7 +29,7 @@ public class StatorableFactoryForTests implements IStatorFactory, ITechStatorabl
       return tsc;
    }
    
-   public Object createObject(int classID) {
+   public Object createObject(StatorReader reader, int classID) {
       switch (classID) {
          case CLASSID_Statorable1ForTests:
             return new Statorable1ForTests(tsc);
@@ -68,8 +69,9 @@ public class StatorableFactoryForTests implements IStatorFactory, ITechStatorabl
       }
    }
 
-   public boolean isSupported(int classID) {
-      switch (classID) {
+   public boolean isSupported(IStatorable statorable) {
+      int id = statorable.getStatorableClassID();
+      switch (id) {
          case CLASSID_Statorable1ForTests:
          case CLASSID_Statorable2ForTests:
          case CLASSID_CLASSID_FANCYA:

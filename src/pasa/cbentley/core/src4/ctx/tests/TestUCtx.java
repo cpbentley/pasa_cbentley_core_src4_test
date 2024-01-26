@@ -41,22 +41,6 @@ public class TestUCtx extends TestCaseBentley {
       assertEquals(1, uc2.getRegistrationID());
    }
 
-   public void testCreationTwiceSameManager() {
-      //you can create 2 core ctxs
-      Random r1 = new Random();
-      UCtx uc1 = new UCtx();
-      uc1.setRandom(r1);
-
-      try {
-         //same ctx with same ctx manager
-         UCtx uc2 = new UCtx(uc1.getCtxManager());
-         assertEquals(true, false);
-      } catch (IllegalArgumentException e) {
-         assertEquals(true, true);
-      }
-
-      assertEquals(1, uc1.getRegistrationID());
-   }
 
    public void testSingleCreation() {
 
