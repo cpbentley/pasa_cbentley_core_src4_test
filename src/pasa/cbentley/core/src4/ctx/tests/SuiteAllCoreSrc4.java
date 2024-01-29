@@ -14,8 +14,9 @@ import pasa.cbentley.core.src4.structs.SuiteCoreSrc4Structs;
 import pasa.cbentley.core.src4.text.tests.SuiteCoreSrc4Text;
 import pasa.cbentley.core.src4.thread.tests.SuiteCoreSrc4Thread;
 import pasa.cbentley.core.src4.utils.tests.SuiteCoreSrc4Utils;
+import pasa.cbentley.testing.engine.TestSuiteBentley;
 
-public class SuiteAllCoreSrc4  extends TestSuite {
+public class SuiteAllCoreSrc4  extends TestSuiteBentley {
 
    public static Test suite() {
 
