@@ -25,11 +25,11 @@ public class TestPulseThread extends TestCaseBentley  {
    public void testPulseThread() throws InterruptedException {
 
       IEventBus eventBusRoot = uc.getEventBusRoot();
-      int pulseEventPID = eventBusRoot.createNewProducerID(IEventsCore.PID_5_THREAD_X_NUM);
+      int pulseEventPID = eventBusRoot.createNewProducerID(IEventsCore.PID_05_XX);
       assertEquals(5, pulseEventPID);
 
       PulseConsumerForTests pct = new PulseConsumerForTests(uc);
-      eventBusRoot.addConsumer(pct, pulseEventPID, IEventsCore.PID_5_THREAD_0_ANY);
+      eventBusRoot.addConsumer(pct, pulseEventPID, IEventsCore.PID_05_THREAD_0_ANY);
 
       //#debug
       toDLog().pTest("IEventBus after adding consumer", eventBusRoot, TestPulseThread.class, "testPulseThread", LVL_05_FINE, false);

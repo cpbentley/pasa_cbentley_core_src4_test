@@ -26,7 +26,7 @@ public class TestBufferObject extends TestCaseBentley {
       bo.add("Hi");
       assertEquals(2, bo.getSize());
    }
-   
+
    public void testSwap() {
       BufferObject bo = new BufferObject(uc, 5);
 
@@ -36,27 +36,83 @@ public class TestBufferObject extends TestCaseBentley {
       bo.add("2");
       bo.add("3");
       bo.add("4");
-      
+
       assertEquals(4, bo.getSize());
 
       bo.swap(0, 1);
-      
+
       assertEquals("2", bo.get(0));
       assertEquals("1", bo.get(1));
    }
 
    public void testAdd1() {
-      
+
       BufferObject buffer = new BufferObject(uc, 1);
-      
+
       buffer.add("1");
-      
+
       //#debug
       toDLog().pTest("msg", buffer, TestBufferObject.class, "testAdd1", LVL_05_FINE, false);
-      
+
       assertEquals(1, buffer.getSize());
-      
+
    }
+
+   public void testAddArray() {
+      BufferObject buffer = new BufferObject(uc, 1);
+
+      buffer.add("1");
+
+      String[] ar = new String[] { "2", "3" };
+
+      buffer.add(ar);
+
+      assertEquals(3, buffer.getSize());
+
+      assertEquals("1", buffer.getFirst());
+      assertEquals("3", buffer.getLast());
+   }
+
+   public void testAddBigArray() {
+      BufferObject buffer = new BufferObject(uc, 1);
+
+      buffer.add("1");
+
+      String[] ar = new String[] { "2", "3", "4", "5", "6", "7", "8", "9", };
+
+      buffer.add(ar);
+
+      assertEquals(9, buffer.getSize());
+
+      assertEquals("1", buffer.getFirst());
+      assertEquals("9", buffer.getLast());
+
+      assertEquals("1", buffer.removeFirst());
+
+      buffer.add(ar);
+
+      assertEquals(16, buffer.getSize());
+
+   }
+
+   public void testAddArray3Times() {
+      BufferObject buffer = new BufferObject(uc);
+
+      String[] ar1 = new String[] { "1", "2", "3", "4" };
+      String[] ar2 = new String[] { "5", "6", "7" };
+      String[] ar3 = new String[] { "5", "6", "7" };
+
+      buffer.add(ar1);
+      assertEquals(4, buffer.getSize());
+      
+      buffer.removeFirst();
+      buffer.add(ar2);
+      buffer.removeFirst();
+      buffer.add(ar3);
+
+      assertEquals(8, buffer.getSize());
+   }
+
    public void testInsertAt() {
 
       BufferObject bo = new BufferObject(uc, 5);
@@ -83,7 +139,7 @@ public class TestBufferObject extends TestCaseBentley {
       toDLog().pTest("", bo, TestBufferObject.class, "testInsertAt", LVL_05_FINE, false);
 
       bo.insertAt(0, "0");
-      
+
       //#debug
       toDLog().pTest("", bo, TestBufferObject.class, "testInsertAt", LVL_05_FINE, false);
 
@@ -91,7 +147,6 @@ public class TestBufferObject extends TestCaseBentley {
 
       assertEquals(9, bo.getSize());
 
-      
       //#debug
       toDLog().pTest("", bo, TestBufferObject.class, "testInsertAt", LVL_05_FINE, false);
 

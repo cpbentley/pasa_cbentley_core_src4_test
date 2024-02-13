@@ -19,9 +19,9 @@ public class PulseConsumerForTests extends ObjectU implements IEventConsumer {
    }
 
    public void consumeEvent(BusEvent e) {
-      if (e.getEventID() == IEventsCore.PID_5_THREAD_1_PULSE_ON) {
+      if (e.getEventID() == IEventsCore.PID_05_THREAD_1_PULSE_ON) {
          pulseOnCount++;
-      } else if (e.getEventID() == IEventsCore.PID_5_THREAD_1_PULSE_ON) {
+      } else if (e.getEventID() == IEventsCore.PID_05_THREAD_1_PULSE_ON) {
          pulseOffCount++;
       }
       System.out.println("Pulse " + ToStringStaticUc.toStringThreadState(e.getParam1()));

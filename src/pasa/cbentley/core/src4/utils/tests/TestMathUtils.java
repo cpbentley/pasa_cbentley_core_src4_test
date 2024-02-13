@@ -21,6 +21,15 @@ public class TestMathUtils extends TestCaseBentley {
 
    }
 
+   public void testIntDivisions() {
+      assertEquals(5400, 180 * 30);
+      assertEquals(54, 5400 / 100);
+      assertEquals(54, 180 * 30 / 100);
+      assertEquals(20, 100 / 5);
+      assertEquals(13, 143 / 11);
+
+   }
+
    public void testACOS() {
       StringUtils su = uc.getStrU();
 
