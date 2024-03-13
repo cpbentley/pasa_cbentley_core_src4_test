@@ -12,7 +12,7 @@ public class TestStatorCtx extends ACtx {
    private StatorableFactoryForTests statorFactory;
 
    public TestStatorCtx(TestCtx tc) {
-      super(tc.getUCtx());
+      super(tc.getUC());
       this.tc = tc;
       statorFactory = new StatorableFactoryForTests(this);
    }

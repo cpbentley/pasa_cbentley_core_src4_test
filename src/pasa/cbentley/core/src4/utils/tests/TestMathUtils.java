@@ -5,7 +5,6 @@
 package pasa.cbentley.core.src4.utils.tests;
 
 import pasa.cbentley.core.src4.ctx.UCtx;
-import pasa.cbentley.core.src4.utils.ColorUtils;
 import pasa.cbentley.core.src4.utils.MathUtils;
 import pasa.cbentley.core.src4.utils.StringUtils;
 import pasa.cbentley.testing.engine.TestCaseBentley;
@@ -18,15 +17,6 @@ public class TestMathUtils extends TestCaseBentley {
 
    public void setupAbstract() {
       mu = new MathUtils(new UCtx());
-
-   }
-
-   public void testIntDivisions() {
-      assertEquals(5400, 180 * 30);
-      assertEquals(54, 5400 / 100);
-      assertEquals(54, 180 * 30 / 100);
-      assertEquals(20, 100 / 5);
-      assertEquals(13, 143 / 11);
 
    }
 
@@ -115,13 +105,30 @@ public class TestMathUtils extends TestCaseBentley {
       System.out.println(Math.toDegrees(MathUtils.aTan(8, 1)));
       System.out.println(Math.toDegrees(MathUtils.aTan(9, 1)));
 
+      
+      assertEquals("0.447", su.prettyDouble(Math.toDegrees(MathUtils.aTan(1, 200)), 3));
+      assertEquals("45", su.prettyDouble(Math.toDegrees(MathUtils.aTan(1, 1)), 3));
       assertEquals("59.999", su.prettyDouble(Math.toDegrees(MathUtils.aTan(2, 1)), 3));
       assertEquals("67.5", su.prettyDouble(Math.toDegrees(MathUtils.aTan(3, 1)), 3));
       assertEquals("72.0", su.prettyDouble(Math.toDegrees(MathUtils.aTan(4, 1)), 3));
       assertEquals("74.999", su.prettyDouble(Math.toDegrees(MathUtils.aTan(5, 1)), 3));
+      assertEquals("85.714", su.prettyDouble(Math.toDegrees(MathUtils.aTan(20, 1)), 3));
+      assertEquals("89.552", su.prettyDouble(Math.toDegrees(MathUtils.aTan(200, 1)), 3));
 
       assertEquals("0.523", su.prettyDouble(MathUtils.aTan(1, 2), 3));
 
+   }
+
+   public void testDouble() {
+      double d = 100000000376832.0000;
+
+      assertEquals(true, d < Double.MAX_VALUE);
+      assertEquals(4.9E-324, Double.MIN_VALUE);
+      assertEquals(-1022, Double.MIN_EXPONENT);
+      assertEquals(1023, Double.MAX_EXPONENT);
+      assertEquals(1.7976931348623157E308, Double.MAX_VALUE);
+
+      System.out.println(d);
    }
 
    public void testfastInverseSqrt() {
@@ -129,6 +136,15 @@ public class TestMathUtils extends TestCaseBentley {
       System.out.println(MathUtils.fastInverseSqrt(4));
       System.out.println(MathUtils.fastInverseSqrt(8));
       System.out.println(MathUtils.fastInverseSqrt(16));
+
+   }
+
+   public void testIntDivisions() {
+      assertEquals(5400, 180 * 30);
+      assertEquals(54, 5400 / 100);
+      assertEquals(54, 180 * 30 / 100);
+      assertEquals(20, 100 / 5);
+      assertEquals(13, 143 / 11);
 
    }
 

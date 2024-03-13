@@ -52,7 +52,7 @@ public abstract class StatorableAbstractForTests implements IStatorable {
    }
 
    public UCtx toStringGetUCtx() {
-      return tc.getUCtx();
+      return tc.getUC();
    }
 
    //#enddebug

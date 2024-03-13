@@ -20,7 +20,7 @@ public class Level2Statorable extends ObjectU implements IStatorable, ITechStato
    private BufferObject        buffer;
 
    public Level2Statorable(TestStatorCtx tsc) {
-      super(tsc.getUCtx());
+      super(tsc.getUC());
       this.tsc = tsc;
       buffer = new BufferObject(uc);
    }

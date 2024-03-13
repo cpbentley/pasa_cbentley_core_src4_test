@@ -20,7 +20,7 @@ public class Level3Statorable extends ObjectU implements IStatorable, ITechStato
    private BufferObject        buffer;
 
    public Level3Statorable(TestStatorCtx tsc) {
-      super(tsc.getUCtx());
+      super(tsc.getUC());
       this.tsc = tsc;
       buffer = new BufferObject(uc);
    }

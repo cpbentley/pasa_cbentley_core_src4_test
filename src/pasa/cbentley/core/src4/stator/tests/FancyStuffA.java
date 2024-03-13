@@ -13,7 +13,7 @@ public class FancyStuffA extends ObjectU implements IFancyStuffTest {
    private TestStatorCtx tsc;
 
    public FancyStuffA(TestStatorCtx tsc) {
-      super(tsc.getUCtx());
+      super(tsc.getUC());
       this.tsc = tsc;
    }
 
