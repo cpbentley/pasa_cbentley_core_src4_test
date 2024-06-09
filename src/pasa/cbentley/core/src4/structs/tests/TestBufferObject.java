@@ -45,6 +45,32 @@ public class TestBufferObject extends TestCaseBentley {
       assertEquals("1", bo.get(1));
    }
 
+   public void testGetTrimmedArray() {
+      BufferObject buffer = new BufferObject(uc, 1, 2, 3);
+
+      buffer.add("1");
+      buffer.add("2");
+      buffer.add("3");
+
+      assertEquals(3, buffer.getSize());
+
+      Object[] ar = buffer.getClonedTrimmed();
+
+      assertEquals("1", ar[0]);
+      assertEquals("2", ar[1]);
+      assertEquals("3", ar[2]);
+
+      buffer.addLeft("0");
+
+      ar = buffer.getClonedTrimmed();
+
+      assertEquals("0", ar[0]);
+      assertEquals("1", ar[1]);
+      assertEquals("2", ar[2]);
+      assertEquals("3", ar[3]);
+
+   }
+
    public void testAdd1() {
 
       BufferObject buffer = new BufferObject(uc, 1);
@@ -104,7 +130,7 @@ public class TestBufferObject extends TestCaseBentley {
 
       buffer.add(ar1);
       assertEquals(4, buffer.getSize());
-      
+
       buffer.removeFirst();
       buffer.add(ar2);
       buffer.removeFirst();
