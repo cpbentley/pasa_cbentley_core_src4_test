@@ -27,6 +27,45 @@ public class TestBufferObject extends TestCaseBentley {
       assertEquals(2, bo.getSize());
    }
 
+   public void testRemoveFirst() {
+      BufferObject bo = new BufferObject(uc, 5);
+
+      assertEquals(0, bo.getSize());
+
+      bo.add("1");
+      bo.add("2");
+      bo.add("3");
+      bo.add("4");
+
+      Object removeLast = bo.removeFirst();
+
+      assertEquals("1", removeLast);
+
+      assertEquals(3, bo.getLength());
+      
+      
+      assertEquals("2", bo.get(0));
+      
+   }
+
+   public void testRemoveLast() {
+      BufferObject bo = new BufferObject(uc, 5);
+
+      assertEquals(0, bo.getSize());
+
+      bo.add("1");
+      bo.add("2");
+      bo.add("3");
+      bo.add("4");
+
+      Object removeLast = bo.removeLast();
+
+      assertEquals("4", removeLast);
+
+      assertEquals(3, bo.getLength());
+
+   }
+
    public void testSwap() {
       BufferObject bo = new BufferObject(uc, 5);
 
@@ -118,6 +157,43 @@ public class TestBufferObject extends TestCaseBentley {
       buffer.add(ar);
 
       assertEquals(16, buffer.getSize());
+
+   }
+
+   public void testRemoveAtIndex() {
+      BufferObject buffer = new BufferObject(uc, 1);
+
+      String[] ar = new String[] { "0", "1", "2", "3", "9", };
+
+      buffer.add(ar);
+
+      buffer.removeAtIndex(2);
+
+      assertEquals("0", buffer.getFirst());
+      assertEquals("1", buffer.get(1));
+      assertEquals("3", buffer.get(2));
+      assertEquals("9", buffer.get(3));
+      assertEquals("9", buffer.getLast());
+
+   }
+
+   public void testRemoveAllFromIndex() {
+      BufferObject buffer = new BufferObject(uc, 1);
+
+      String[] ar = new String[] { "0", "1", "2", "3", "9", };
+
+      buffer.add(ar);
+
+      BufferObject rem = buffer.removeAllForIndex(2);
+
+      assertEquals("0", buffer.getFirst());
+      assertEquals("1", buffer.getLast());
+
+      assertEquals(2, buffer.getSize());
+
+      assertEquals("2", rem.getFirst());
+      assertEquals("9", rem.getLast());
+      assertEquals(3, rem.getSize());
 
    }
 

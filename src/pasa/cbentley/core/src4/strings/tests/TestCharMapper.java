@@ -10,6 +10,201 @@ public class TestCharMapper extends TestCaseBentley {
 
    }
 
+   public void testAddOne() {
+      CharMapper cm = new CharMapper(uc);
+
+      char[] chars = "###Lifeisreal?##".toCharArray();
+      int offset = 3;
+      int len = chars.length - 5;
+
+      cm.opAddChar(4, '-');
+
+      cm.setSource(chars, offset, len);
+      cm.build();
+
+      assertEquals("Life-isreal?", cm.getStringMapped());
+   }
+
+   /**
+    * 😘 ☔ ☀ ♠ ♡ ♢ ♣ ♤ ♥ ♦ ♧ font changes if first line
+    * strange 😘 ☔ ☀ ♠ ♡ ♢ ♣ ♤ ♥ ♦ ♧
+    */
+   public void testWierd() {
+      CharMapper cm = new CharMapper(uc);
+
+      char[] chars = "###😘☔ ☀ ♠ ♡ ♢ ♣ ♤ ♥ ♦ ♧##".toCharArray();
+      int offset = 3;
+      int len = chars.length - 5;
+
+      cm.opAddChars(4, "---");
+
+      cm.setSource(chars, offset, len);
+      cm.build();
+      //first char is double char but one caret visible
+      assertEquals("😘☔ ---☀ ♠ ♡ ♢ ♣ ♤ ♥ ♦ ♧", cm.getStringMapped());
+
+   }
+
+   public void testVisualSingleDoubleChar() {
+      CharMapper cm = new CharMapper(uc);
+
+      char[] chars = "###😘##".toCharArray();
+      int offset = 3;
+      int len = chars.length - 5;
+
+      assertEquals(chars.length, 7);
+
+      cm.opRemove(1);
+
+      cm.setSource(chars, offset, len);
+      cm.build();
+
+      //assertEquals("?", cm.getStringMapped());
+
+   }
+
+   /**
+    * 
+    */
+   public void testAddWierd() {
+      CharMapper cm = new CharMapper(uc);
+
+      char[] chars = "#♡#".toCharArray();
+      int offset = 1;
+      int len = chars.length - 2;
+
+      assertEquals(chars.length, 3);
+
+
+      cm.opAddChars(0, "😘");
+      
+      cm.setSource(chars, offset, len);
+      cm.build();
+
+      assertEquals("😘♡", cm.getStringMapped());
+
+   }
+
+   /**
+    * 
+    */
+   public void testAddLastWierd() {
+      CharMapper cm = new CharMapper(uc);
+
+      char[] chars = "#♡#".toCharArray();
+      int offset = 1;
+      int len = chars.length - 2;
+
+      assertEquals(chars.length, 3);
+
+      cm.opAddChar(1, '♠');
+
+      cm.setSource(chars, offset, len);
+      cm.build();
+
+      assertEquals("♡♠", cm.getStringMapped());
+
+   }
+
+   public void testAddSeveralAfterRemove() {
+      CharMapper cm = new CharMapper(uc);
+
+      char[] chars = "###0123456789##".toCharArray();
+      int offset = 3;
+      int len = chars.length - 5;
+
+      cm.opRemove(1);
+      cm.opAddChars(4, "---");
+
+      cm.setSource(chars, offset, len);
+      cm.build();
+
+      assertEquals("023---456789", cm.getStringMapped());
+
+   }
+
+   public void testRemoveFirst() {
+      CharMapper cm = new CharMapper(uc);
+
+      char[] chars = "###0123456789##".toCharArray();
+      int offset = 3;
+      int len = chars.length - 5;
+
+      cm.opRemove(0);
+
+      cm.setSource(chars, offset, len);
+      cm.build();
+
+      assertEquals("123456789", cm.getStringMapped());
+
+   }
+
+   public void testAddSeveralRemove() {
+      CharMapper cm = new CharMapper(uc);
+
+      char[] chars = "###Lifeisreal?##".toCharArray();
+      int offset = 3;
+      int len = chars.length - 5;
+
+      cm.opRemove(1);
+      cm.opAddChars(4, "---");
+
+      cm.setSource(chars, offset, len);
+      cm.build();
+
+      assertEquals("Lfe---isreal?", cm.getStringMapped());
+
+   }
+
+   public void testAddSeveral() {
+      CharMapper cm = new CharMapper(uc);
+
+      char[] chars = "###Lifeisreal?##".toCharArray();
+      int offset = 3;
+      int len = chars.length - 5;
+
+      cm.opAddChars(4, "---");
+
+      cm.setSource(chars, offset, len);
+      cm.build();
+
+      assertEquals("Life---isreal?", cm.getStringMapped());
+
+   }
+
+   public void testCharMapper() {
+
+      CharMapper cm = new CharMapper(uc);
+
+      char[] data = "##I want.\n Replace i with str.###".toCharArray();
+      int offset = 2;
+      int len = data.length - 5;
+
+      cm.setSource(data, offset, len);
+
+      cm.opReplaceOne(6, '!');
+
+      cm.opRemove(7);
+
+      cm.opReplaceWith(17, "str");
+
+      cm.opRemove(27);
+
+      cm.build();
+
+      assertEquals("I want! Replace str with str", cm.getStringMapped());
+      assertEquals(" want.", cm.getStringSrc(1, 6));
+      assertEquals(" want.\n Re", cm.getStringSrc(1, 10));
+
+      assertEquals("st", cm.getStringSrc(25, 2));
+      assertEquals("str.", cm.getStringSrc(25, 3)); //add one and take the hidden char
+
+      StringBBuilder sb = new StringBBuilder(uc);
+      cm.appendStringSrc(sb, 0, 10);
+      assertEquals("I want.\n Re", sb.toString());
+
+   }
+
    public void testCharMapper1Char() {
 
       CharMapper cm = new CharMapper(uc);
@@ -93,7 +288,7 @@ public class TestCharMapper extends TestCaseBentley {
       cm.opReplaceChar(0, 'K');
       cm.build();
       assertEquals("KT", cm.getStringMapped());
-      assertEquals("I", cm.getStringSrc(0,1));
+      assertEquals("I", cm.getStringSrc(0, 1));
       assertEquals("IT", cm.getStringSrc());
 
       //char replace with String
@@ -101,8 +296,8 @@ public class TestCharMapper extends TestCaseBentley {
       cm.opReplaceWith(0, "Str");
       cm.build();
       assertEquals("StrT", cm.getStringMapped());
-      assertEquals("I", cm.getStringSrc(0,1));
-      assertEquals("I", cm.getStringSrc(0,2));
+      assertEquals("I", cm.getStringSrc(0, 1));
+      assertEquals("I", cm.getStringSrc(0, 2));
       assertEquals("IT", cm.getStringSrc());
 
       //remove
@@ -110,7 +305,7 @@ public class TestCharMapper extends TestCaseBentley {
       cm.opRemove(0);
       cm.build();
       assertEquals("T", cm.getStringMapped());
-      assertEquals("IT", cm.getStringSrc(0,1));
+      assertEquals("IT", cm.getStringSrc(0, 1));
       assertEquals("IT", cm.getStringSrc());
    }
 
@@ -147,7 +342,7 @@ public class TestCharMapper extends TestCaseBentley {
       cm.opRemove(1);
       cm.build();
       assertEquals("E", cm.getStringMapped());
-      assertEquals("ITE", cm.getStringSrc(0,1));
+      assertEquals("ITE", cm.getStringSrc(0, 1));
       assertEquals("ITE", cm.getStringSrc());
    }
 
@@ -181,8 +376,33 @@ public class TestCharMapper extends TestCaseBentley {
       cm.opRemove(1);
       cm.build();
       assertEquals("IE", cm.getStringMapped());
-      assertEquals("ITE", cm.getStringSrc(0,2));
+      assertEquals("ITE", cm.getStringSrc(0, 2));
       assertEquals("ITE", cm.getStringSrc());
+   }
+
+   public void testCharMapperNewLine() {
+
+      CharMapper cm = new CharMapper(uc);
+
+      String str = "\n\t\n";
+
+      assertEquals(3, str.length());
+
+      assertEquals('\n', str.charAt(0));
+
+      cm.setSource(str);
+      cm.opReplaceChar(0, ' ');
+      cm.opRemove(1);
+      cm.opReplaceChar(2, ' ');
+      cm.build();
+
+      assertEquals("  ", cm.getStringMapped());
+      assertEquals('\n', cm.getModelChar(0));
+      assertEquals('\n', cm.getModelChar(1)); //1 does not know
+
+      assertEquals("\n", cm.getStringSrc(0, 1));
+      assertEquals("\n\t\n", cm.getStringSrc(0, 2));
+
    }
 
    public void testCharMapperWant() {
@@ -202,62 +422,108 @@ public class TestCharMapper extends TestCaseBentley {
       assertEquals('a', cm.getModelChar(1));
    }
 
-   public void testCharMapperNewLine() {
-
+   public void testReplaceLast() {
       CharMapper cm = new CharMapper(uc);
 
-      String str = "\n\t\n";
+      char[] chars = "###Life\n##".toCharArray();
+      int offset = 3;
+      int len = chars.length - 5;
 
-      assertEquals(3, str.length());
-      
-      assertEquals('\n', str.charAt(0));
-      
-      cm.setSource(str);
-      cm.opReplaceChar(0,' ');
-      cm.opRemove(1);
-      cm.opReplaceChar(2,' ');
+      cm.setSource(chars, offset, len);
+
+      cm.opReplaceOne(4, '!');
       cm.build();
 
-      assertEquals("  ", cm.getStringMapped());
-      assertEquals('\n', cm.getModelChar(0));
-      assertEquals('\n', cm.getModelChar(1)); //1 does not know
-
-      assertEquals("\n", cm.getStringSrc(0,1));
-      assertEquals("\n\t\n", cm.getStringSrc(0,2));
-      
+      assertEquals("Life!", cm.getStringMapped());
    }
-   
-   public void testCharMapper() {
 
+   public void testReplaceOne() {
       CharMapper cm = new CharMapper(uc);
 
-      char[] data = "##I want.\n Replace i with str.###".toCharArray();
-      int offset = 2;
-      int len = data.length - 5;
+      char[] chars = "###Life\n is real?##".toCharArray();
+      int offset = 3;
+      int len = chars.length - 5;
 
-      cm.setSource(data, offset, len);
+      cm.setSource(chars, offset, len);
 
-      cm.opReplaceOne(6, '!');
-
-      cm.opRemove(7);
-
-      cm.opReplaceWith(17, "str");
-
-      cm.opRemove(27);
-
+      cm.opReplaceOne(4, '!');
       cm.build();
 
-      assertEquals("I want! Replace str with str", cm.getStringMapped());
-      assertEquals(" want.", cm.getStringSrc(1,6));
-      assertEquals(" want.\n Re", cm.getStringSrc(1,10));
+      assertEquals("Life! is real?", cm.getStringMapped());
+   }
 
-      assertEquals("st", cm.getStringSrc(25,2));
-      assertEquals("str.", cm.getStringSrc(25,3)); //add one and take the hidden char
+   public void testReplaceOne3Times() {
+      CharMapper cm = new CharMapper(uc);
+
+      char[] chars = "###Life\n is real?##".toCharArray();
+      int offset = 3;
+      int len = chars.length - 5;
+
+      cm.setSource(chars, offset, len);
+
+      cm.opReplaceOne(4, '!');
+      cm.opReplaceOne(5, '*');
+      cm.opReplaceOne(8, '$');
+      cm.build();
+
+      assertEquals("Life!*is$real?", cm.getStringMapped());
+   }
+
+   public void testReplaceOne3TimesRemoveBetween() {
+      CharMapper cm = new CharMapper(uc);
+
+      char[] chars = "###Life\n is real?##".toCharArray();
+      int offset = 3;
+      int len = chars.length - 5;
+
+      cm.setSource(chars, offset, len);
+
+      cm.opReplaceOne(4, '!');
+      cm.opReplaceOne(5, '*');
+      cm.opReplaceOne(8, '$');
+      cm.opRemove(6);
+      cm.build();
+
+      assertEquals("Life!*s$real?", cm.getStringMapped());
+   }
+
+   public void testReplaceRT() {
+      CharMapper cm = new CharMapper(uc);
       
-      StringBBuilder sb = new StringBBuilder(uc);
-      cm.appendStringSrc(sb, 0, 10);
-      assertEquals("I want.\n Re", sb.toString());
+      char[] chars = "###Life \n\n\nGreat \n\n\nHappy##".toCharArray();
+      int offset = 3;
+      int len = chars.length - 5;
+    
+      
+      cm.opReplaceOne(4, '·');
+      cm.opReplaceOne(5, '↵');
+      cm.opReplaceOne(6, '↵');
+      cm.opReplaceOne(7, '↵');
+      
+      cm.opReplaceOne(13, '·');
+      cm.opReplaceOne(14, '↵');
+      cm.opReplaceOne(15, '↵');
+      cm.opReplaceOne(16, '↵');
+      
+      cm.setSource(chars, offset, len);
+      cm.setOffsetExtra(0);
+      cm.build();
+      
+      assertEquals("Life·↵↵↵Great·↵↵↵Happy", cm.getStringMapped());
+   }
+   public void testReplaceOneSourceAfter() {
+      CharMapper cm = new CharMapper(uc);
 
+      char[] chars = "###Life\n is real?##".toCharArray();
+      int offset = 3;
+      int len = chars.length - 5;
+
+      cm.opReplaceOne(4, '!');
+
+      cm.setSource(chars, offset, len);
+      cm.build();
+
+      assertEquals("Life! is real?", cm.getStringMapped());
    }
 
 }
