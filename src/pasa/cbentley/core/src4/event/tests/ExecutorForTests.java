@@ -13,6 +13,8 @@ import pasa.cbentley.core.src4.logging.IDLog;
 
 public class ExecutorForTests implements IExecutor {
 
+   private Stack<Integer> stackModes;
+
    protected final UCtx uc;
 
    public ExecutorForTests(UCtx uc) {
@@ -20,7 +22,20 @@ public class ExecutorForTests implements IExecutor {
       stackModes = new Stack<Integer>();
    }
 
-   private Stack<Integer> stackModes;
+   public void executeMainLater(Runnable run) {
+      stackModes.add(THREAD_MODE_2_MAIN_LATER);
+      run.run();
+   }
+
+   public void executeMainNow(Runnable run) {
+      stackModes.add(THREAD_MODE_1_MAIN_NOW);
+      run.run();
+   }
+
+   public void executeWorker(Runnable run) {
+      stackModes.add(THREAD_MODE_3_WORKER);
+      run.run();
+   }
 
    public int getLastMode() {
       if (stackModes.isEmpty()) {
@@ -30,19 +45,9 @@ public class ExecutorForTests implements IExecutor {
       }
    }
 
-   public void executeWorker(Runnable run) {
-      stackModes.add(THREAD_MODE_3_WORKER);
-      run.run();
-   }
-
-   public void executeMainNow(Runnable run) {
-      stackModes.add(THREAD_MODE_1_MAIN_NOW);
-      run.run();
-   }
-
-   public void executeMainLater(Runnable run) {
-      stackModes.add(THREAD_MODE_2_MAIN_LATER);
-      run.run();
+   public boolean isMainThread() {
+      // TODO Auto-generated method stub
+      return false;
    }
 
    //#mdebug
@@ -63,10 +68,6 @@ public class ExecutorForTests implements IExecutor {
       return Dctx.toString1Line(this);
    }
 
-   private void toStringPrivate(Dctx dc) {
-
-   }
-
    public void toString1Line(Dctx dc) {
       dc.root1Line(this, "TestExecutor");
       toStringPrivate(dc);
@@ -74,6 +75,10 @@ public class ExecutorForTests implements IExecutor {
 
    public UCtx toStringGetUCtx() {
       return uc;
+   }
+
+   private void toStringPrivate(Dctx dc) {
+
    }
 
    //#enddebug

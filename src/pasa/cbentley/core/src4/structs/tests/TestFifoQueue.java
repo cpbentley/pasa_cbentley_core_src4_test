@@ -65,7 +65,31 @@ public class TestFifoQueue extends TestCaseBentley {
       assertEquals(null, q.getTail());
 
    }
+   public void testSize() {
+      FiFoQueue q = createNewQueue();
 
+      q.put("1");
+      assertEquals(1, q.size());
+      q.put("2");
+      assertEquals(2, q.size());
+      q.put("3");
+      assertEquals(3, q.size());
+
+      assertEquals("1", q.getHead());
+      assertEquals(2, q.size());
+      assertEquals("2", q.getHead());
+      assertEquals(1, q.size());
+      assertEquals("3", q.getHead());
+      assertEquals(0, q.size());
+
+      assertEquals(null, q.getHead());
+      assertEquals(0, q.size());
+
+      q.put("1");
+      assertEquals(1, q.size());
+
+   }
+   
    public void testOverFlow() {
       FiFoQueue q = createNewQueue();
 
@@ -85,6 +109,7 @@ public class TestFifoQueue extends TestCaseBentley {
       assertEquals("5", q.getHead());
       assertEquals("6", q.getHead());
 
+      
    }
 
 }
