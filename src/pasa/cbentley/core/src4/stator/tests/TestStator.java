@@ -148,10 +148,10 @@ public class TestStator extends TestCaseStator  {
 
       assertEquals("hello", statorFuture.getPrefsReader().get("key", ""));
 
-      assertEquals(10, statorFuture.getReader(TYPE_0_MASTER).readInt());
-      assertEquals(11, statorFuture.getReader(TYPE_1_VIEW).readInt());
-      assertEquals(12, statorFuture.getReader(TYPE_2_MODEL).readInt());
-      assertEquals(13, statorFuture.getReader(TYPE_3_CTX).readInt());
+      assertEquals(10, statorFuture.getReader(TYPE_0_MASTER).dataReadInt());
+      assertEquals(11, statorFuture.getReader(TYPE_1_VIEW).dataReadInt());
+      assertEquals(12, statorFuture.getReader(TYPE_2_MODEL).dataReadInt());
+      assertEquals(13, statorFuture.getReader(TYPE_3_CTX).dataReadInt());
 
    }
 
@@ -164,7 +164,7 @@ public class TestStator extends TestCaseStator  {
       Statorable2ForTests red = new Statorable2ForTests(tsc);
       red.setName("red");
 
-      writer.writerToStatorable(red);
+      writer.dataWriterToStatorable(red);
 
       byte[] data = stator.serializeAll();
       Stator statorFutur = createNewStator();
@@ -190,7 +190,7 @@ public class TestStator extends TestCaseStator  {
       Statorable2ForTests red = new Statorable2ForTests(tsc);
       red.setName("red");
 
-      writer.writerToStatorable(red);
+      writer.dataWriterToStatorable(red);
 
       byte[] data = stator.serializeAll();
       Stator statorFutur = createNewStator();
@@ -214,7 +214,7 @@ public class TestStator extends TestCaseStator  {
       Statorable2ForTests red = new Statorable2ForTests(tsc);
       red.setName("red");
 
-      writer.writerToStatorable(red);
+      writer.dataWriterToStatorable(red);
 
       byte[] data = stator.serializeAll();
       Stator statorFutur = createNewStator();
@@ -223,7 +223,7 @@ public class TestStator extends TestCaseStator  {
       StatorReader reader = statorFutur.getReader(TYPE_0_MASTER);
 
       assertEquals(true, reader.hasMore());
-      Statorable2ForTests redFuture = (Statorable2ForTests) reader.readObject(tsc);
+      Statorable2ForTests redFuture = (Statorable2ForTests) reader.dataReadObject(tsc);
 
       assertEquals("red", redFuture.getName());
       assertEquals(false, reader.hasMore());
@@ -241,7 +241,7 @@ public class TestStator extends TestCaseStator  {
 
       red.setName("red");
 
-      writer.writerToStatorable(red);
+      writer.dataWriterToStatorable(red);
 
       byte[] data = stator.serializeAll();
       Stator statorFutur = createNewStator();
@@ -250,7 +250,7 @@ public class TestStator extends TestCaseStator  {
       StatorReader reader = statorFutur.getReader(TYPE_0_MASTER);
 
       assertEquals(true, reader.hasMore());
-      Statorable2ForTests redFuture = (Statorable2ForTests) reader.readObject(tsc);
+      Statorable2ForTests redFuture = (Statorable2ForTests) reader.dataReadObject(tsc);
       assertEquals(false, reader.hasMore());
       assertEquals("red", redFuture.getName());
 
@@ -276,7 +276,7 @@ public class TestStator extends TestCaseStator  {
       FancyStuffB fbGreenFuture = (FancyStuffB) green.getFancyStuff();
       assertEquals("FancyStringGreen", fbGreenFuture.getFancyString());
 
-      writer.writerToStatorable(red);
+      writer.dataWriterToStatorable(red);
 
       byte[] data = stator.serializeAll();
       Stator statorFutur = createNewStator();
@@ -307,7 +307,7 @@ public class TestStator extends TestCaseStator  {
       assertEquals(null, lvl2.getS2());
 
       StatorWriter sw = stator.getWriter(TYPE_2_MODEL);
-      sw.writerToStatorable(lvl2);
+      sw.dataWriterToStatorable(lvl2);
 
       assertEquals(4, sw.getNumWrittenObject());
 
@@ -317,7 +317,7 @@ public class TestStator extends TestCaseStator  {
 
       StatorReader reader = statorFutur.getReader(TYPE_2_MODEL);
 
-      Level2Statorable lvl2Future = (Level2Statorable) reader.readObject();
+      Level2Statorable lvl2Future = (Level2Statorable) reader.dataReadObject();
 
       assertEquals(null, lvl2Future.getS1());
       assertEquals(null, lvl2Future.getS2());
@@ -343,7 +343,7 @@ public class TestStator extends TestCaseStator  {
       assertEquals(null, lvl2.getS2());
 
       StatorWriter sw = stator.getWriter(TYPE_2_MODEL);
-      sw.writerToStatorable(lvl2);
+      sw.dataWriterToStatorable(lvl2);
 
       assertEquals(4, sw.getNumWrittenObject());
 
@@ -365,7 +365,7 @@ public class TestStator extends TestCaseStator  {
       assertEquals("g1a", ((IFancyStuffTest) existing.getBuffer().get(6)).getFancyString());
 
       
-      Level2Statorable fromExisting = (Level2Statorable) reader.readObject(existing);
+      Level2Statorable fromExisting = (Level2Statorable) reader.dataReadObject(existing);
       
       assertEquals(true, existing == fromExisting);
       

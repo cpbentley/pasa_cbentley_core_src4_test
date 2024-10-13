@@ -4,7 +4,6 @@
  */
 package pasa.cbentley.core.src4.structs.listdoublelink.tests;
 
-import junit.framework.TestCase;
 import pasa.cbentley.core.src4.structs.listdoublelink.LinkedListDouble;
 import pasa.cbentley.core.src4.structs.listdoublelink.ListElement;
 import pasa.cbentley.core.src4.structs.listdoublelink.ListElementHolder;
@@ -15,35 +14,53 @@ public class TestLinkedListDouble extends TestCaseBentley {
    public TestLinkedListDouble() {
    }
 
-   public void testRemoveObjectRef() {
-      LinkedListDouble lld = new LinkedListDouble(uc);
-      
-      Integer i1 = 1;
-      Integer i3 = 2;
-      Integer i2 = 3;
-      
-      lld.addFreeHolder(i1);
-      lld.addFreeHolder(i2);
-      lld.addFreeHolder(i3);
-      lld.addFreeHolder(i2);
-      lld.addFreeHolder(i1);
-      
-      
-      assertEquals(i1, ((ListElementHolder)lld.getHead()).getObject());
-
-      assertEquals(5, lld.getNumElements());
-
-      
-      lld.removeObjectRef(i3);
-
-      assertEquals(4, lld.getNumElements());
-
-      lld.removeObjectRef(i1);
-
-      assertEquals(2, lld.getNumElements());
+   public void setupAbstract() {
 
    }
-   
+
+   public void testDoubleAdd() {
+      LinkedListDouble lld = new LinkedListDouble(uc);
+      ListElement le1 = new ListElement(lld);
+
+      le1.addToList();
+      le1.addToList();
+
+      assertEquals(1, lld.getNumElements());
+      assertEquals(le1, lld.getHead());
+      assertEquals(le1, lld.getTail());
+
+   }
+
+   public void testGetArray1() {
+      LinkedListDouble lld = new LinkedListDouble(uc);
+
+      lld.addFreeHolder("1");
+
+      Object[] ar = lld.getArray();
+
+      assertEquals(1, ar.length);
+
+      assertEquals(ar[0], "1");
+   }
+
+   public void testGetArray() {
+      LinkedListDouble lld = new LinkedListDouble(uc);
+
+      lld.addFreeHolder("1");
+      lld.addFreeHolder("2");
+      lld.addFreeHolder("3");
+      lld.addFreeHolder("4");
+
+      Object[] ar = lld.getArray();
+
+      assertEquals(4, ar.length);
+
+      assertEquals(ar[0], "1");
+      assertEquals(ar[1], "2");
+      assertEquals(ar[2], "3");
+      assertEquals(ar[3], "4");
+   }
+
    public void testList() {
 
       LinkedListDouble lld = new LinkedListDouble(uc);
@@ -165,19 +182,6 @@ public class TestLinkedListDouble extends TestCaseBentley {
 
    }
 
-   public void testDoubleAdd() {
-      LinkedListDouble lld = new LinkedListDouble(uc);
-      ListElement le1 = new ListElement(lld);
-
-      le1.addToList();
-      le1.addToList();
-
-      assertEquals(1, lld.getNumElements());
-      assertEquals(le1, lld.getHead());
-      assertEquals(le1, lld.getTail());
-
-   }
-
    public void testMoveHeadToTail() {
 
       LinkedListDouble lld = new LinkedListDouble(uc);
@@ -234,7 +238,30 @@ public class TestLinkedListDouble extends TestCaseBentley {
 
    }
 
-   public void setupAbstract() {
+   public void testRemoveObjectRef() {
+      LinkedListDouble lld = new LinkedListDouble(uc);
+
+      Integer i1 = 1;
+      Integer i3 = 2;
+      Integer i2 = 3;
+
+      lld.addFreeHolder(i1);
+      lld.addFreeHolder(i2);
+      lld.addFreeHolder(i3);
+      lld.addFreeHolder(i2);
+      lld.addFreeHolder(i1);
+
+      assertEquals(i1, ((ListElementHolder) lld.getHead()).getObject());
+
+      assertEquals(5, lld.getNumElements());
+
+      lld.removeObjectRef(i3);
+
+      assertEquals(4, lld.getNumElements());
+
+      lld.removeObjectRef(i1);
+
+      assertEquals(2, lld.getNumElements());
 
    }
 }

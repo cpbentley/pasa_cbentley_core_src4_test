@@ -2,8 +2,6 @@ package pasa.cbentley.core.src4.stator.tests;
 
 import pasa.cbentley.core.src4.ctx.ICtx;
 import pasa.cbentley.core.src4.ctx.ObjectU;
-import pasa.cbentley.core.src4.ctx.UCtx;
-import pasa.cbentley.core.src4.logging.Dctx;
 import pasa.cbentley.core.src4.stator.IStatorable;
 import pasa.cbentley.core.src4.stator.StatorReader;
 import pasa.cbentley.core.src4.stator.StatorWriter;
@@ -11,18 +9,38 @@ import pasa.cbentley.core.src4.structs.BufferObject;
 
 public class Level2Statorable extends ObjectU implements IStatorable, ITechStatorableTest {
 
-   private TestStatorCtx       tsc;
+   private BufferObject        buffer;
 
    private Statorable1ForTests s1;
 
    private Statorable2ForTests s2;
 
-   private BufferObject        buffer;
+   private TestStatorCtx       tsc;
 
    public Level2Statorable(TestStatorCtx tsc) {
       super(tsc.getUC());
       this.tsc = tsc;
       buffer = new BufferObject(uc);
+   }
+
+   public void clear() {
+      buffer.clear();
+   }
+
+   public BufferObject getBuffer() {
+      return buffer;
+   }
+
+   public ICtx getCtxOwner() {
+      return tsc;
+   }
+
+   public Statorable1ForTests getS1() {
+      return s1;
+   }
+
+   public Statorable2ForTests getS2() {
+      return s2;
    }
 
    public int getStatorableClassID() {
@@ -48,7 +66,7 @@ public class Level2Statorable extends ObjectU implements IStatorable, ITechStato
       buffer.add(f2);
       buffer.add(f1);
    }
-   
+
    public void populateBufferG() {
 
       FancyStuffA f1 = new FancyStuffA(tsc);
@@ -69,42 +87,9 @@ public class Level2Statorable extends ObjectU implements IStatorable, ITechStato
       buffer.add(f1);
    }
 
-   public BufferObject getBuffer() {
-      return buffer;
-   }
-
-   public Statorable2ForTests getS2() {
-      return s2;
-   }
-
-   public Statorable1ForTests getS1() {
-      return s1;
-   }
-
-   public ICtx getCtxOwner() {
-      return tsc;
-   }
-
-   public void clear() {
-      buffer.clear();
-   }
-
-   public void stateWriteTo(StatorWriter state) {
-      state.writerToStatorable(s1);
-      state.writerToStatorable(s2);
-      int len = buffer.getLength();
-      
-      state.writeStartIndex(len);
-      for (int i = 0; i < len; i++) {
-         IStatorable object = (IStatorable) buffer.get(i);
-         state.writerToStatorable(object);
-      }
-
-   }
-
    public void stateReadFrom(StatorReader state) {
-      s1 = (Statorable1ForTests) state.readObject(tsc, s1);
-      s2 = (Statorable2ForTests) state.readObject(tsc, s2);
+      s1 = (Statorable1ForTests) state.dataReadObject(tsc, s1);
+      s2 = (Statorable2ForTests) state.dataReadObject(tsc, s2);
 
       int len = state.readStartIndex();
 
@@ -112,16 +97,33 @@ public class Level2Statorable extends ObjectU implements IStatorable, ITechStato
          //replace
          for (int i = 0; i < len; i++) {
             IStatorable object = (IStatorable) buffer.get(i);
-            Object s = state.readObject(object);
+            Object s = state.dataReadObject(object);
             buffer.setUnsafe(i, s);
          }
       } else {
          //new one
          buffer = new BufferObject(uc);
          for (int i = 0; i < len; i++) {
-            Object s = state.readObject();
+            Object s = state.dataReadObject();
             buffer.add(s);
          }
       }
+   }
+
+   public void stateWriteTo(StatorWriter state) {
+      state.dataWriterToStatorable(s1);
+      state.dataWriterToStatorable(s2);
+      int len = buffer.getLength();
+
+      state.dataWriteStartIndex(len);
+      for (int i = 0; i < len; i++) {
+         IStatorable object = (IStatorable) buffer.get(i);
+         state.dataWriterToStatorable(object);
+      }
+
+   }
+
+   public void stateWriteToParamSub(StatorWriter state) {
+
    }
 }

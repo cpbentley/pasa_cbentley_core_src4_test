@@ -40,11 +40,11 @@ public class TestStatorWriter extends TestCaseStator {
       Statorable1ForTests blue = new Statorable1ForTests(tsc);
       blue.setStringColor("blue");
 
-      writer.writerToStatorable(blue);
-      writer.writerToStatorable(red);
+      writer.dataWriterToStatorable(blue);
+      writer.dataWriterToStatorable(red);
 
       //write it again.. but it won't affect the stator.. just writing the object ID
-      writer.writerToStatorable(blue);
+      writer.dataWriterToStatorable(blue);
       
       assertEquals(2, writer.getNumWrittenObject());
 
@@ -80,8 +80,8 @@ public class TestStatorWriter extends TestCaseStator {
       Statorable1ForTests blue = new Statorable1ForTests(tsc);
       blue.setStringColor("blue");
 
-      writer.writerToStatorable(blue);
-      writer.writerToStatorable(blue);
+      writer.dataWriterToStatorable(blue);
+      writer.dataWriterToStatorable(blue);
       
       assertEquals(1, writer.getNumWrittenObject());
 
@@ -114,7 +114,7 @@ public class TestStatorWriter extends TestCaseStator {
 
       ts2.setState1(ts1);
 
-      writer.writerToStatorable(ts2);
+      writer.dataWriterToStatorable(ts2);
 
       assertEquals(2, writer.getNumWrittenObject());
 
@@ -126,7 +126,7 @@ public class TestStatorWriter extends TestCaseStator {
 
       assertEquals(2, reader.getNumObjects());
 
-      Statorable2ForTests ts2Read = (Statorable2ForTests) reader.readObject(tsc);
+      Statorable2ForTests ts2Read = (Statorable2ForTests) reader.dataReadObject(tsc);
 
       assertNotNull(ts2Read);
       assertNotNull(ts2Read.getName());

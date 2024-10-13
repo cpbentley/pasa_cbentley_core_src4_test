@@ -20,11 +20,12 @@ public class Statorable1ForTests extends StatorableAbstractForTests {
 
    }
 
-   public int getIntColor() {
-      return intColor;
-   }
    public ICtx getCtxOwner() {
       return tsc;
+   }
+
+   public int getIntColor() {
+      return intColor;
    }
 
    public int getStatorableClassID() {
@@ -51,6 +52,10 @@ public class Statorable1ForTests extends StatorableAbstractForTests {
    public void stateWriteTo(StatorWriter state) {
       state.getWriter().writeString(getStringColor());
       state.getWriter().writeInt(getIntColor());
+   }
+
+   public void stateWriteToParamSub(StatorWriter state) {
+
    }
 
    //#mdebug

@@ -42,4 +42,8 @@ public class FancyStuffB extends ObjectU implements IFancyStuffTest {
       this.fancyString = fancyString;
    }
 
+   public void stateWriteToParamSub(StatorWriter state) {
+      
+   }
+
 }
