@@ -18,7 +18,7 @@ public class TestDLogEntry extends TestCaseBentley {
 
    public void testBasic() {
       
-      DLogEntry e = new DLogEntry();
+      DLogEntry e = new DLogEntry(uc);
       
       e.setLevel(1);
       
