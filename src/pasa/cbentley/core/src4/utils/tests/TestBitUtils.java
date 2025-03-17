@@ -734,7 +734,44 @@ public class TestBitUtils extends TestCaseBentley {
       assertEquals(ar[4], 0);
 
    }
+   
+   public void testHasFlag() {
+      
+      int root = 1 | 2;
+      
+      assertEquals(root, 3);
+      
+      assertEquals(BitUtils.hasFlag(root, 3), true);
 
+      assertEquals(BitUtils.hasFlag(root, 1), true);
+      assertEquals(BitUtils.hasFlag(root, 2), true);
+
+      assertEquals(BitUtils.hasFlag(root, 4), false);
+      
+      root |= 4;
+      assertEquals(BitUtils.hasFlag(root, 4), true);
+      assertEquals(BitUtils.hasFlag(root, 3), true);
+      
+   }
+
+   public void testHasFlagOr() {
+      int root = 1;
+      assertEquals(BitUtils.hasMatchAtLeastOneFlag(root, 1), true);
+      assertEquals(BitUtils.hasMatchAtLeastOneFlag(root, 3), true);
+      
+      root |= 2;
+      assertEquals(BitUtils.hasMatchAtLeastOneFlag(root, 1), true);
+      assertEquals(BitUtils.hasMatchAtLeastOneFlag(root, 2), true);
+
+      
+      assertEquals(BitUtils.hasMatchAtLeastOneFlag(1, 2), false);
+      assertEquals(BitUtils.hasMatchAtLeastOneFlag(1, 4), false);
+      assertEquals(BitUtils.hasMatchAtLeastOneFlag(1, 8), false);
+
+      assertEquals(BitUtils.hasMatchAtLeastOneFlag(1 | 4, 8), false);
+      assertEquals(BitUtils.hasMatchAtLeastOneFlag(1 | 8 | 16, 8), true);
+      
+   }
    public void testByteShiftDown() {
       byte[] ar = new byte[5];
       ar[1] = 3;
